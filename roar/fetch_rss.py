@@ -125,6 +125,7 @@ BROWSER_HEADERS = {
     "Accept-Language": "en-US,en;q=0.9",
 }
 FEEDLY_STREAM = "https://cloud.feedly.com/v3/streams/contents"
+FEEDLY_SEARCH = "https://cloud.feedly.com/v3/search/feeds"
 
 
 def _parse_bytes(content: bytes):
@@ -144,15 +145,33 @@ def _feedly_fallback(session, url: str, timeout: int, count: int = 40):
     from email.utils import formatdate
     from xml.sax.saxutils import escape
 
-    r = session.get(FEEDLY_STREAM, params={"streamId": f"feed/{url}", "count": count},
-                    headers={"Accept": "application/json", "User-Agent": BROWSER_HEADERS["User-Agent"]},
-                    timeout=timeout)
-    if r.status_code >= 400:
-        return None, f"feedly HTTP {r.status_code}"
-    data = json.loads(r.text)
-    items = data.get("items") or []
+    hdrs = {"Accept": "application/json", "User-Agent": BROWSER_HEADERS["User-Agent"]}
+    stream_ids = [f"feed/{url}"]
+    # Feedly may know the same feed under a slightly different id (http vs https, trailing "?"...):
+    # ask its search index for the URL and try the ids it returns that live on the same host.
+    try:
+        host = url.split("//", 1)[-1].split("/", 1)[0].removeprefix("www.")
+        sr = session.get(FEEDLY_SEARCH, params={"query": url, "count": 5}, headers=hdrs, timeout=timeout)
+        if sr.status_code < 400:
+            for res in json.loads(sr.text).get("results") or []:
+                fid = res.get("feedId") or ""
+                if fid.startswith("feed/") and host in fid and fid not in stream_ids:
+                    stream_ids.append(fid)
+    except Exception:  # search is best-effort
+        pass
+
+    data, items, last_err = {}, [], "feedly: no items"
+    for sid in stream_ids:
+        r = session.get(FEEDLY_STREAM, params={"streamId": sid, "count": count}, headers=hdrs, timeout=timeout)
+        if r.status_code >= 400:
+            last_err = f"feedly HTTP {r.status_code}"
+            continue
+        data = json.loads(r.text)
+        items = data.get("items") or []
+        if items:
+            break
     if not items:
-        return None, "feedly: no items"
+        return None, last_err
     parts = ['<?xml version="1.0" encoding="utf-8"?><rss version="2.0"><channel>',
              f"<title>{escape(str(data.get('title') or url))}</title>"]
     for it in items:
