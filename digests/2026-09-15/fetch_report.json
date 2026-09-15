@@ -1,10 +1,16 @@
 {
   "week_of": "2026-09-15",
   "feeds": [],
-  "queries": [],
-  "items_fetched": 362,
+  "queries": [
+    {
+      "id": "breast",
+      "ok": true,
+      "count": 16
+    }
+  ],
+  "items_fetched": 16,
   "already_seen": 0,
   "carried_over": 0,
-  "candidates": 160,
-  "sources_ok": 10
+  "candidates": 16,
+  "sources_ok": 1
 }

@@ -1,0 +1,645 @@
+{
+  "meta": {
+    "week_of": "2026-09-15",
+    "feeds": [],
+    "queries": [
+      {
+        "id": "breast",
+        "ok": true,
+        "count": 16
+      }
+    ],
+    "items_fetched": 16,
+    "already_seen": 0,
+    "carried_over": 0,
+    "candidates": 16,
+    "sources_ok": 1
+  },
+  "items": [
+    {
+      "id": "pmid:42727309",
+      "title": "Locoregional Recurrence in Breast Cancer: Contemporary Multimodality Management and Future Directions",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42727309/",
+      "doi": "10.1016/j.clon.2026.104317",
+      "pmid": "42727309",
+      "journal": "Clin Oncol (R Coll Radiol)",
+      "published": "2026-08-11",
+      "authors": "Elumalai T, Ismail M, Thummalapenta N, et al.",
+      "abstract": "Aims: Locoregional recurrence (LRR) of breast cancer, comprising ipsilateral breast tumour recurrence (IBTR), chest wall recurrence after mastectomy (CWR), and regional nodal recurrence including axillary nodal recurrence (ANR), internal mammary node (IMN) recurrence, and supraclavicular (SCV) recurrence, is a significant challenge for patients previously cured of breast cancer. LRR may be surgically resectable or present as locally advanced unresectable disease. There is limited evidence to guide the management of LRR in breast cancer and it requires a multidisciplinary approach. The aim of this review is to synthesise the current evidence and identify gaps in the literature. Materials And Methods: MEDLINE/PubMed, JAMA Network, Annals of Oncology/ESMO, NCCN educational materials, ASTRO/Advances in Radiation Oncology, Clinical Oncology, and key oncology journals were searched (Jan 2010-Oct 2025) for guidelines, randomised controlled trials, prospective trials, large retrospective series, and meta-analyses focused on LRR after prior curative treatment. Outcomes of interest included local control (LC), disease-free survival (DFS), distant metastasis-free survival (DMFS), overall survival (OS), toxicity, and quality of life (QoL). Preference was given to randomised and prospective evidence where available (eg, Chemotherapy as Adjuvant for Locally Recurrent Breast Cancer (CALOR); NRG Oncology/Radiation Therapy Oncology Group (RTOG) 1014). Results: The management of LRR depends on the resectability of the disease. If a negative margin can be achieved, then curative surgical options should be considered. Following surgery, adjuvant systemic therapy (chemotherapy, anti-HER2 therapy, endocrine therapy) may be considered, although evidence specific to LRR is limited. Radiotherapy can also help with LC as well as symptom management. If LRR is unresectable, it should be treated similarly to metastatic disease with the treatment tailored to the molecular subtype. Conclusion: There is limited evidence guiding the management of LRR in breast cancer. Surgical resectability remains the best prognostic factor and offers a potential cure. Systemic therapy and radiotherapy depend on disease biology, and careful examination of the recurrence allows optimal management. Biopsy confirmation and biomarker reassessment are essential because discordance is common.",
+      "pub_types": [
+        "Journal Article"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast",
+        "radonc"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 13,
+      "score_reasons": [
+        "tier2:+2",
+        "rt_core:+3",
+        "randomized:+3",
+        "guideline:+3",
+        "synthesis:+1",
+        "outcome_words:+1",
+        "society_news:+1",
+        "retrospective:-1"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42732888",
+      "title": "Breast cancer overdiagnosis in mammography trials-separating signal from noise: a meta-analysis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42732888/",
+      "doi": "10.1093/jnci/djag302",
+      "pmid": "42732888",
+      "journal": "J Natl Cancer Inst",
+      "published": "2026-09-14",
+      "authors": "Njor SH, Pedersen CU, Lynge E, et al.",
+      "abstract": "Background: Estimates of breast cancer overdiagnosis from randomized mammography trials range from ∼0 to ∼50%, reflecting methodological inconsistencies including handling of exit screening and post-screening compensatory drops. A coherent framework for interpreting trial results is needed to aid clinical counselling and guideline development. Methods: We conducted a unified reanalysis of randomized mammography trials using a reference-based approach. As reference, we used observations from the population-based service screening program in Funen, Denmark, where the temporal pattern of relative proportions (RPs) was used to describe the excess cumulative breast cancer incidence in birth cohorts invited vs not invited to screening. Trial reports identified via PubMed and prior reviews provided cumulative incidence estimates by arm and follow-up period. Control arms with exit screening were reanalyzed as screened. Observed RPs were compared with those expected under the Funen pattern at corresponding timepoints. The hypothesis was that close agreement between observed and expected RPs would indicate compatibility with low overall overdiagnosis. Results: Across 52 timepoints, 73 observed RPs closely matched those expected under the Funen reference pattern for invasive cancer with and without ductal carcinoma in situ. Deviations were plausibly related to incomplete reporting in early trial phases. Most 95% confidence intervals for the observed RPs overlapped expected RP values. Conclusions: When analyzed within a consistent framework accounting for exit screening and follow-up timing, mammography trials yield consistent excess-incidence patterns compatible with very low overdiagnosis (<5%). This supports balanced clinical and policy discussions without relying on unadjusted excess diagnoses as stand-alone overdiagnosis estimates.",
+      "pub_types": [
+        "Journal Article"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast",
+        "screening"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 12,
+      "score_reasons": [
+        "tier2:+2",
+        "randomized:+3",
+        "guideline:+3",
+        "synthesis:+1",
+        "screening:+1",
+        "high_yield_journal:+2"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42715877",
+      "title": "Which quality of life issues are important to patients with metastatic breast cancer: Phase 1 and 2 development of European Organisation for Research and Treatment of Cancer metastatic breast cancer module (EORTC QLQ-MBR)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42715877/",
+      "doi": "10.1016/j.breast.2026.104911",
+      "pmid": "42715877",
+      "journal": "Breast",
+      "published": "2026-09-05",
+      "authors": "Bedding C, Absolom K, Pogoda K, et al.",
+      "abstract": "Background: Metastatic breast cancer (MBC) remains a treatable, but incurable disease. Anti-cancer treatments and supportive therapies aim to control disease, prolong survival, ameliorate physical symptoms and improve quality of life (QoL). Currently, no validated MBC-specific patient-reported outcome measures exist, and existing tools may lack specific content and sensitivity to measure the impact of MBC. This study aims to develop a European Organisation for Research and Treatment of Cancer (EORTC) module for MBC. Methods: Development followed EORTC module guidelines. In phase 1, QoL issues were identified via systematic literature reviews and assessed by semi-structured interviews with healthcare professionals (HCPs) and patients. In phase 2, the most relevant and important issues were converted into questionnaire items using the EORTC Item Library to form the provisional module. Results: The review included 103 papers (phase III clinical trials n = 70 and observational or qualitative studies n = 33), from which 185 issues were extracted, spanning physical, psychological, emotional and social domains. Interviews with 41 HCPs and 187 patients from eight countries refined this list to 44. After expert panel review, the provisional module consisted of 40 issues, assessed by 44 items (EORTC QLQ-MBR44). A sub-analysis of the EORTC QLQ-C30 revealed its content to be considered relevant to MBC by HCP and patients. Conclusion: The provisional EORTC MBC-specific module aims to enhance understanding and measurement of QoL in clinical research and care and be the first QoL tool dedicated to MBC. The standardised tool contains relevant QoL issues and is currently undergoing qualitative and psychometric testing.",
+      "pub_types": [
+        "Journal Article"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 11,
+      "score_reasons": [
+        "tier2:+2",
+        "randomized:+3",
+        "phase2:+2",
+        "guideline:+3",
+        "outcome_words:+1"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42710223",
+      "title": "Axillary Surgery in Sentinel Node-Positive Breast Cancer After Neoadjuvant Therapy: A Systematic Review and Meta-analysis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42710223/",
+      "doi": "10.1016/j.clbc.2026.08.006",
+      "pmid": "42710223",
+      "journal": "Clin Breast Cancer",
+      "published": "2026-08-13",
+      "authors": "El Annan R, El-Jammal M, Zeidan YH",
+      "abstract": "The oncologic value of axillary lymph node dissection (ALND) for residual node-positive (ypN+) breast cancer after neoadjuvant therapy is uncertain when regional nodal irradiation (RNI) is routinely used. We systematically reviewed comparative evidence on locoregional control and survival outcomes with omission versus completion of ALND. PubMed/MEDLINE, Embase, and Cochrane Central were searched from 2000 to 2025 for English-language studies comparing completion ALND with omission of ALND (sentinel lymph node biopsy and/or targeted axillary dissection) among patients with biopsy-proven node-positive breast cancer treated with neoadjuvant therapy who had residual nodal disease at surgery. Two reviewers screened studies and extracted outcomes. We identified 445 initial records for screening and review. Five nonrandomized comparative studies, including 4670 patients, met inclusion criteria and directly compared ypN+ outcomes by axillary surgery extent. In cohorts where RNI was commonly administered, axillary recurrence was uncommon (0.37%-5.7% without ALND and 0.4%-4.8% with ALND). Meta-analysis of comparative studies showed no clear difference in axillary recurrence with omission versus completion of ALND (pooled RR 1.09, 95% CI, 0.47-2.52; P = .80), with moderate heterogeneity (I² = 46%). In selected ypN+ patients treated with RNI, omission of completion ALND appears to yield low axillary recurrence and similar survival outcomes while potentially reducing surgical morbidity. Randomized trials and long-term results of prospective studies are needed to further guide axillary management of patients with residual nodal burden after neoadjuvant therapy.",
+      "pub_types": [
+        "Journal Article",
+        "Review"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast",
+        "radonc",
+        "screening"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 10,
+      "score_reasons": [
+        "tier2:+2",
+        "rt_core:+3",
+        "randomized:+3",
+        "synthesis:+1",
+        "outcome_words:+1",
+        "screening:+1",
+        "pubtype-review:-1"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42720590",
+      "title": "Treatment Effect Discrepancy Between PFS and OS in Antibody-Drug Conjugate Trials for Metastatic Breast Cancer: A Meta-Epidemiologic Analysis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42720590/",
+      "doi": "10.1093/jnci/djag324",
+      "pmid": "42720590",
+      "journal": "J Natl Cancer Inst",
+      "published": "2026-09-10",
+      "authors": "Costa de Almeida LF, Cappellaro AP, Noronha MM, et al.",
+      "abstract": "Objective: The validity of progression-free survival (PFS) as a surrogate for overall survival (OS) in the antibody-drug conjugate (ADCs) era remains uncertain. We evaluated the association between treatment effects on PFS and OS in randomized trials of ADCs for metastatic breast cancer (mBC) and explored the surrogate threshold effect (STE). Methods: PubMed, Embase, Cochrane, and ClinicalTrials.gov were searched for published randomized controlled phase II-IV trials evaluating ADCs in mBC and reporting hazard ratios (HRs) for both PFS and OS. A meta-epidemiological approach was used. The primary metric was the ratio of hazard ratios (rHR = HR_PFS/ HR_OS), with rHR < 1 indicating a larger effect on PFS. Trial-level associations were assessed using weighted linear regression (R²) and Spearman's correlation. Results: Twenty-one trials (n = 21; 18 phase III) evaluating nine ADCs were included. The pooled rHR was 0.79 (95% CI, 0.73-0.86), indicating a larger relative effect on PFS than OS. Numerically, the largest discrepancies were observed in triple-negative disease (rHR 0.72) and trials allowing crossover (rHR 0.71). Concordant statistical significance between endpoints occurred in 76% of the trials, whereas 24% showed a significant PFS benefit without OS improvement. The trial-level association between PFS and OS was moderate (R² = 0.62; ρ = 0.67). Conclusion: Treatment effects on PFS consistently exceeded those on OS, although effect directions were highly concordant between endpoints. These findings provide an exploratory framework to contextualize the relationship between PFS and OS in ADC trials, requiring further validation in diverse clinical settings.",
+      "pub_types": [
+        "Journal Article"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 10,
+      "score_reasons": [
+        "tier2:+2",
+        "randomized:+3",
+        "phase2:+2",
+        "outcome_words:+1",
+        "high_yield_journal:+2"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42727044",
+      "title": "Trastuzumab Botidotin Versus Trastuzumab Emtansine in Human Epidermal Growth Factor Receptor 2-Positive Advanced Breast Cancer: A Phase III, Open-Label, Randomized Controlled Trial",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42727044/",
+      "doi": "10.1200/jco-26-00602",
+      "pmid": "42727044",
+      "journal": "J Clin Oncol",
+      "published": "2026-09-11",
+      "authors": "Zhang J, Ouyang Q, Zhang Q, et al.",
+      "abstract": "Purpose: To evaluate the safety and efficacy of the novel human epidermal growth factor receptor 2 (HER2)-directed antibody-drug conjugate, trastuzumab botidotin, for the treatment of HER2-positive unresectable/metastatic breast cancer (BC). Methods: In this phase III, open-label, multicenter trial (ClinicalTrials.gov identifier: NCT06968585), conducted at 57 centers in China, adult patients with HER2-positive, unresectable/metastatic BC who had received prior trastuzumab and a taxane were randomly assigned (1:1) to receive trastuzumab botidotin or trastuzumab emtansine. The primary end point was progression-free survival (PFS), assessed by blinded independent central review (BICR), using an intention-to-treat analysis. In a prespecified interim analysis of PFS per BICR, trastuzumab botidotin met the prespecified superiority boundary (P < .0001). We report here the prespecified final analysis of PFS. Results: Between July 18, 2023, and April 26, 2024, 365 patients were randomly assigned to trastuzumab botidotin (n = 182) or trastuzumab emtansine (n = 183). At data cutoff (median follow-up, 14.9 months), trastuzumab botidotin resulted in longer PFS than trastuzumab emtansine (median, 11.1 v 4.4 months; hazard ratio [HR], 0.39 [95% CI, 0.30 to 0.51]; nominal P < .0001). Benefit was consistent across subgroups, including those defined by prior lines of anti-HER2 therapy, prior pertuzumab or anti-HER2 tyrosine kinase inhibitors, and visceral metastases. The objective response rate was 76.9% (95% CI, 70.1 to 82.8) with trastuzumab botidotin and 53.0% (95% CI, 45.5 to 60.4) with trastuzumab emtansine. Overall survival data were immature (medians not reached in either group; HR, 0.62 [95% CI, 0.38 to 1.03]). Grade ≥3 treatment-emergent adverse events occurred in 127 (69.8%) and 116 (63.7%) patients in each group, respectively. Ocular treatment-related adverse events had a high incidence with trastuzumab botidotin; however, with a protocol-defined algorithm, most events generally recovered or resolved. Trastuzumab botidotin treatment had low incidences of pulmonary, hematologic, hepatic, and GI toxicities. Conclusion: Among patients with HER2-positive advanced BC previously treated with trastuzumab and a taxane, trastuzumab botidotin resulted in significantly longer PFS than trastuzumab emtansine, with a distinct safety profile.",
+      "pub_types": [
+        "Journal Article"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 10,
+      "score_reasons": [
+        "tier2:+2",
+        "randomized:+3",
+        "phase2:+2",
+        "outcome_words:+1",
+        "high_yield_journal:+2"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42720596",
+      "title": "Endocrine Biomarker Changes in a Randomised Low-Dose Tamoxifen Trial for Breast Cancer Prevention",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42720596/",
+      "doi": "10.1093/jnci/djag321",
+      "pmid": "42720596",
+      "journal": "J Natl Cancer Inst",
+      "published": "2026-09-10",
+      "authors": "Nash S, Hammarström M, Thörngen JO, et al.",
+      "abstract": "Background: Tamoxifen reduces breast cancer incidence and recurrence, but uptake for primary prevention remains limited, largely because of concerns regarding adverse effects at the standard 20 mg dose. Understanding systemic endocrine effects of lower tamoxifen doses may help improve future prevention strategies. Methods: We analysed data from 1,055 healthy women enrolled in the randomised, double-blind, placebo-controlled KARISMA trial, assigned to placebo or tamoxifen 1, 2.5, 5, 10, or 20 mg daily for 6 months. Plasma concentrations of endocrine biomarkers and tamoxifen metabolites were measured at study end. Associations between randomised tamoxifen dose, circulating metabolite concentrations, and endocrine biomarker plasma concentration (estrogens, androgens, progestogens, cortisol, prolactin, and sex hormone-binding globulin (SHBG)), were evaluated. Results: Tamoxifen dose was associated with measurable endocrine changes after six months, most consistently increased SHBG levels, with additional associations observed for cortisol and hydroxyprogesterone. SHBG demonstrated the clearest dose-response relationship, with increasing levels across tamoxifen dose groups and evidence of attenuated increase at intermediate doses. Large relative differences between placebo and 20 mg tamoxifen were additionally observed for estrone, estrone sulphate and estradiol. Unadjusted analyses of circulating endoxifen showed broadly similar endocrine patterns; however, these associations were substantially attenuated after adjustment for randomised tamoxifen dose. Circulating tamoxifen metabolites were strongly correlated with administered dose and with one another. Conclusions: Low-dose tamoxifen was associated with measurable endocrine changes, particularly in SHBG, cortisol, and hydroxyprogesterone. These findings show endocrine pharmacodynamic responses during low-dose tamoxifen therapy warrants further investigation as a potential component of future individualised prevention and adjuvant endocrine therapy strategies. Trial Registration: ClinicalTrials.gov ID: NCT03346200.",
+      "pub_types": [
+        "Journal Article"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 8,
+      "score_reasons": [
+        "tier2:+2",
+        "randomized:+3",
+        "society_news:+1",
+        "high_yield_journal:+2"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42727418",
+      "title": "Datopotamab deruxtecan versus chemotherapy in previously treated inoperable/metastatic hormone receptor-positive, human epidermal growth factor receptor 2-negative breast cancer: results from the TROPION-Breast01 China cohort",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42727418/",
+      "doi": "10.1016/j.esmoop.2026.108538",
+      "pmid": "42727418",
+      "journal": "ESMO Open",
+      "published": "2026-09-11",
+      "authors": "Wang S, Zhang Q, Jiang Z, et al.",
+      "abstract": "Background: In the global phase III TROPION-Breast01 study, datopotamab deruxtecan (Dato-DXd) demonstrated a statistically significant and clinically meaningful improvement in progression-free survival (PFS) by blinded independent central review (BICR) versus investigator's choice of chemotherapy (ICC) in patients with previously treated, inoperable/metastatic hormone receptor(HR)-positive human epidermal growth factor receptor 2-negative (HR+/HER2-) breast cancer. At the final analysis, overall survival (OS) was not statistically significant. We report final results from the prespecified analysis of patients enrolled in mainland China. Patients And Methods: Patients with inoperable/metastatic HR+/HER2- breast cancer, who had disease progression on endocrine therapy and for whom endocrine therapy was unsuitable and who had received 1-2 prior lines of chemotherapy in the inoperable/metastatic setting, were randomly assigned 1 : 1 to Dato-DXd (6 mg/kg every 3 weeks) or ICC (eribulin/capecitabine/vinorelbine/gemcitabine). Dual primary endpoints were PFS by BICR and OS. Results: Overall, 83 patients were enrolled in mainland China (Dato-DXd, n = 44; ICC, n = 39). PFS by BICR numerically favored Dato-DXd versus ICC [hazard ratio (HR) 0.54, 95% confidence interval (CI) 0.30-0.96, nominal P = 0.0329; median PFS: 8.1 versus 4.2 months]. OS numerically favored Dato-DXd versus ICC [HR 0.83 (95% CI 0.49-1.43), nominal P = 0.5028]. The rate of grade ≥3 treatment-related adverse events (TRAEs) was lower with Dato-DXd versus ICC (29.5% versus 58.3%). The most common TRAEs (any grade/grade 3-4) were nausea (47.7%/4.5%) and increased aspartate aminotransferase (40.9%/2.3%) with Dato-DXd, and neutropenia (grouped term, 58.3%/36.1%) and anemia (52.8%/8.3%) with ICC. With Dato-DXd, treatment-related AEs of special interest (grouped terms) oral mucositis/stomatitis and ocular surface events occurred in 43.2% and 47.7% of patients, respectively. Conclusion: In this China cohort, Dato-DXd demonstrated numerically improved efficacy versus ICC and a manageable safety profile, consistent with the global population, supporting Dato-DXd as a new treatment option for Chinese patients with previously treated metastatic HR+/HER2- breast cancer.",
+      "pub_types": [
+        "Journal Article"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 8,
+      "score_reasons": [
+        "tier2:+2",
+        "randomized:+3",
+        "phase2:+2",
+        "outcome_words:+1"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42722231",
+      "title": "Severe Acute Radiation Dermatitis Following Ultra-Hypofractionated Whole Breast Radiation Therapy in a Patient With Systemic Lupus Erythematosus",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42722231/",
+      "doi": "10.1016/j.prro.2026.08.013",
+      "pmid": "42722231",
+      "journal": "Pract Radiat Oncol",
+      "published": "2026-09-10",
+      "authors": "Melotek JM, Moshe AB, Gerber NK, et al.",
+      "abstract": "Background: Whole-breast ultra-hypofractionated radiation therapy is an accepted adjuvant option for early-stage breast cancer, but evidence remains limited for patients with systemic lupus erythematosus (SLE), particularly those receiving chronic disease modifying antirheumatic drug (DMARD) therapy. Clinical Scenario: A 76-year-old woman with clinically quiescent SLE/Sjögren syndrome on mycophenolate mofetil was diagnosed with left breast invasive ductal carcinoma, ER/PR-positive and HER2-negative. After breast-conserving surgery and sentinel lymph node biopsy, pathology showed a 13-mm grade 3 tumor with lymphovascular invasion, negative margins, and 0/5 sentinel nodes, pT1cN0(sn), stage IA. Radiation omission was considered because of age, node-negative disease, and planned endocrine therapy; however, grade 3 histology, lymphovascular invasion, and Ki-67 of 43% placed her outside the lowest-risk populations supporting omission. During a period of active regional conflict with daily missile threats, an expedited regimen was selected. She received 26 Gy in 5 fractions to the left whole breast using supine field in-field 3-dimensional conformal radiation therapy, without regional nodal irradiation or tumor-bed boost. Dosimetry was acceptable, with PTV V95% 95%, maximum dose 104.9%, mean heart dose 0.8 Gy, and ipsilateral lung V8 Gy 15%. Outcome: Approximately 2 weeks after treatment, she developed progressive erythema, diffuse breast edema, pain, and extensive confluent moist desquamation beyond skin folds, without evidence of infection, consistent with RTOG grade 3 acute radiation dermatitis. Management included topical corticosteroids, silver sulfadiazine, enzyme alginogel, polymeric membrane dressings, analgesics, close nursing follow-up, and subsequent lymphedema-directed physiotherapy. Recovery was prolonged, and later rheumatologic reassessment documented recurrent systemic symptoms requiring belimumab. Conclusion: Although causality cannot be proven, the severity of acute dermatitis was atypical for FAST-Forward whole-breast irradiation and suggests that SLE-associated radiosensitivity may have contributed. Modern data indicate that connective tissue disease is not an absolute contraindication to breast radiation, and hypofractionation can be feasible. However, evidence is sparse for whole-breast ultra-hypofractionation in patients with SLE on chronic DMARD therapy.…",
+      "pub_types": [
+        "Journal Article"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast",
+        "radonc"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 7,
+      "score_reasons": [
+        "tier2:+2",
+        "rt_core:+3",
+        "high_yield_journal:+2"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42735668",
+      "title": "Selective Omission of Oncotype Dx Genomic Testing in Ultra-Low-Risk Luminal A Breast Cancer",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42735668/",
+      "doi": "10.1016/j.clbc.2026.08.017",
+      "pmid": "42735668",
+      "journal": "Clin Breast Cancer",
+      "published": "2026-08-22",
+      "authors": "Schmalzle M, Radigan R, Patel D, et al.",
+      "abstract": "Introduction: Older women with early-stage luminal A breast cancer have an excellent prognosis with a 5-year relative survival >99%. Research on curtailing overtreatment has challenged historical standards of care by reducing radiotherapy dose and volume, and selectively omitting sentinel lymph node biopsy. This study assessed the utility of Oncotype Dx genomic testing in ultra-low-risk luminal A breast cancer. Patients And Methods: A community hospital cancer registry was queried to identify consecutive breast cancer patients from 2014 to 2022. An ultra-low-risk population was defined as age ≥60 years, hormone-receptor positive, HER2-negative, pathologic stage T1b-T2N0 without lymphovascular invasion, and Ki-67 ≤13.25%. Analyses examined the distribution of Oncotype Dx scores categorized as low risk (0-18), intermediate risk (19-25), or high risk (26-100), as well as recurrence and overall survival. Results: Of 1711 patients, 91 met ultra-low-risk eligibility criteria with available Oncotype Dx results. The median age was 70 years with a median follow-up of 5.1 years, and no patients received chemotherapy. Only 1 patient (1.1%) had a high-risk Oncotype Dx score of ≥26, while 12 (13.2%) had intermediate scores and 78 (85.7%) were low risk. Five-year local control and overall survival were 100% and 93%, respectively. Ten non-breast cancer deaths occurred, and no patients developed distant metastases. Conclusion: We describe a pragmatic method using common clinical and pathological features to define an ultra-low-risk cohort. Older luminal A patients with favorable pathology have a very low probability of receiving a high-risk Oncotype Dx score and demonstrate an excellent prognosis with standard adjuvant therapy.",
+      "pub_types": [
+        "Journal Article"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast",
+        "radonc"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 6,
+      "score_reasons": [
+        "tier2:+2",
+        "rt_core:+3",
+        "outcome_words:+1"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42715513",
+      "title": "Risk-Adapted Optimization of Neoadjuvant Therapy in Human Epidermal Growth Factor Receptor 2-Positive Early-Stage Breast Cancer",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42715513/",
+      "doi": "10.1200/jco-26-01423",
+      "pmid": "42715513",
+      "journal": "J Clin Oncol",
+      "published": "2026-09-09",
+      "authors": "Kleeman SO, Stearns V",
+      "abstract": "Women with stage II to III human epidermal growth factor receptor 2 (HER2)-positive breast cancer commonly receive neoadjuvant therapy. Recent trials have substantially expanded treatment options for these individuals. Randomized trial data indicate that carboplatin can be safely omitted from neoadjuvant therapy for most patients with stage II HER2-positive early-stage breast cancer, with comparable pathological complete response rates and reduced toxicity. Here, we review evidence supporting de-escalation in the neoadjuvant setting from docetaxel or paclitaxel, carboplatin, trastuzumab, pertuzumab to docetaxel or paclitaxel, trastuzumab, pertuzumab with weekly paclitaxel and examine biomarker-guided strategies for further de-escalation, including chemotherapy-free approaches. DESTINY-Breast11 and DESTINY-Breast05 have established the use of neoadjuvant and postneoadjuvant fam-trastuzumab deruxtecan-nxki, respectively, as new options for high-risk disease, with both indications recently granted approval from the U S Food and Drug Administration. We propose a framework for risk-adapted treatment optimization, highlighting the potential of circulating tumor DNA monitoring and functional imaging as response-adapted strategies and identifying them as priorities for future investigation. Together, these advances support a more precise, individualized approach to caring for patients with early-stage HER2-positive breast cancer.",
+      "pub_types": [
+        "Journal Article",
+        "Review"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 6,
+      "score_reasons": [
+        "tier2:+2",
+        "randomized:+3",
+        "high_yield_journal:+2",
+        "pubtype-review:-1"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42704328",
+      "title": "Heart Dose in Breast Cancer Hypofractionated Radiation Therapy: An Ongoing Concern",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42704328/",
+      "doi": "10.1016/j.prro.2026.04.021",
+      "pmid": "42704328",
+      "journal": "Pract Radiat Oncol",
+      "published": "2026-09-05",
+      "authors": "Carbonara R, Di Guglielmo FC, Ciliberti MP, et al.",
+      "abstract": "",
+      "pub_types": [
+        "Letter"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast",
+        "radonc"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 5,
+      "score_reasons": [
+        "tier2:+2",
+        "rt_core:+3",
+        "high_yield_journal:+2",
+        "pubtype-comment:-2"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42727162",
+      "title": "Prognostic role of thymidine kinase 1 activity in hormone receptor positive metastatic breast cancer. A systematic review and meta-analysis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42727162/",
+      "doi": "10.1016/j.breast.2026.104914",
+      "pmid": "42727162",
+      "journal": "Breast",
+      "published": "2026-09-09",
+      "authors": "Migliaccio I, Buonaiuto R, Anichini G, et al.",
+      "abstract": "Introduction: Circulating thymidine kinase 1 activity (TKa) is a potential prognostic biomarker in patients with hormone receptor-positive (HR+) metastatic breast cancer (MBC); however, results are heterogeneous. In this study we aimed to summarize the current evidence on the prognostic role of circulating TKa in women with HR+ MBC. Methods: We conducted a systematic review of PubMed, Embase, and Cochrane CENTRAL databases and abstracts from main international oncology meetings. Phase II-IV clinical trials and prospective observational studies in patients with MBC assessing circulating TK1 levels or TKa and reporting hazard ratios (HRs) for progression-free survival (PFS) and/or overall survival (OS) were included. HRs were pooled using random-effects models (restricted maximum likelihood with Hartung-Knapp adjustment), with heterogeneity quantified by I2 and prediction intervals. The primary study outcome was the association of baseline and on-treatment TKa with PFS and OS. Secondary analyses aimed at exploring the source of heterogeneity. Results: Eighteen studies, reporting data from nearly 3000 women, were included in the systematic review and 15 studies were meta-analyzed. Patients with HR+ MBC and high baseline TKa showed a significantly higher risk of progression (PFS: HR 1.90; 95% CI 1.57-2.30; p < 0.001) and death (OS: HR 2.48; 95% CI 1.94-3.17; p < 0.001) than those with low TKa. TKa at 2 and 4 weeks on-treatment was also prognostic (2 weeks, PFS: HR 2.76; 95% CI 2.34-3.26; p < 0.001; 4 weeks, HR 2.26; 95% CI 1.93-2.66; p < 0.001). Similar pooled effects were obtained when accounting for different cut-offs, TKa assessment, and sample-type. Conclusion: Pre-treatment high TKa is an adverse prognostic factor in women with HR+ MBC. High on-treatment TKa is also associated with worse outcome, potentially serving as an early signal of treatment resistance. We provide a comprehensive summary of the currently available evidence on the prognostic value of circulating TKa.",
+      "pub_types": [
+        "Journal Article",
+        "Review"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 5,
+      "score_reasons": [
+        "tier2:+2",
+        "phase2:+2",
+        "synthesis:+1",
+        "outcome_words:+1",
+        "pubtype-review:-1"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42714872",
+      "title": "Neoadjuvant Pertuzumab Biosimilar HLX11 Versus Reference Pertuzumab for Early-stage or Locally Advanced Breast Cancer: A phase 3 Equivalence Trial",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42714872/",
+      "doi": "10.1158/1078-0432.ccr-26-1604",
+      "pmid": "42714872",
+      "journal": "Clin Cancer Res",
+      "published": "2026-09-09",
+      "authors": "Zhang J, Zhu J, Yang Y, et al.",
+      "abstract": "Purpose: This randomized, double-blind phase 3 equivalence study aimed to evaluate the similarity of neoadjuvant pertuzumab biosimilar HLX11 versus reference pertuzumab plus trastuzumab and docetaxel for human epidermal growth factor receptor 2-positive, hormone receptor-negative early-stage or locally advanced breast cancer (BC). Patients And Methods: Eligible patients were randomly assigned (1:1) to receive 4 cycles of neoadjuvant HLX11 (HLX11 arm) or European Union-sourced pertuzumab, plus trastuzumab and docetaxel (EU-pertuzumab arm). Patients in the respective arms received adjuvant HLX11 plus trastuzumab or were re-randomized (1:1) to receive HLX11 or EU-pertuzumab plus trastuzumab. The primary endpoint was blinded independent central review (BICR)-assessed total pathological complete response (tpCR) rate. Results: In total, 908 patients were randomized to the HLX11 (n = 454) or EU-pertuzumab arm (n = 454); 192 patients in HLX11 arm received adjuvant HLX11; 200 patients in EU-pertuzumab arm were re-randomized to receive adjuvant HLX11 (n = 100) or EU-pertuzumab (n = 100). BICR-assessed tpCR rate (95% confidence interval [CI]) was 46.3% (41.6%-51.0%) and 45.8% (41.2%-50.5%), respectively. The equivalence criteria were met, with relative risk of tpCR (90% CI) of 1.01 (0.90-1.14) and relative difference (95% CI) of 0.47% (-5.99%-6.92%). No clinically meaningful differences were observed in other efficacy endpoints, safety, pharmacokinetics (PK), or immunogenicity. In the adjuvant phase, switching from EU-pertuzumab to HLX11 led to no notable differences in safety, PK, or immunogenicity. Conclusions: Compared with EU-pertuzumab, neoadjuvant HLX11 demonstrated a similar tpCR rate and no clinically meaningful differences in other efficacy endpoints, safety, PK, or immunogenicity in BC.",
+      "pub_types": [
+        "Journal Article"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 5,
+      "score_reasons": [
+        "tier2:+2",
+        "randomized:+3"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42726095",
+      "title": "SHBG as a breast cancer risk biomarker in premenopausal women? Results from an individual patient's pooled analysis and a meta-analysis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42726095/",
+      "doi": "10.1093/jnci/djag318",
+      "pmid": "42726095",
+      "journal": "J Natl Cancer Inst",
+      "published": "2026-09-11",
+      "authors": "Serrano D, Rizzo R, Johansson H, et al.",
+      "abstract": "Background: Low levels of sex hormone-binding globulin (SHBG) have been associated with increased breast cancer (BC) risk, particularly in postmenopausal women. Whether this association extends to premenopausal women remains uncertain. We therefore performed an individual-patient pooled analysis and a meta-analysis to evaluate SHBG's role as a biomarker across menopausal status. Methods: The pooled analysis included women at increased BC risk enrolled in two low-dose tamoxifen trials. The meta-analysis included 11 independent published studies assessing the association of SHBG with BC risk in healthy premenopausal women. Results: Among premenopausal women in the pooled high-risk cohort, SHBG levels above the lowest tertile were associated with a 40% lower hazard of subsequent breast cancer events (HR = 0.60; 95% CI, 0.38-0.96; p = 0.03). In the meta-analysis, comprising 35,167 premenopausal women and 2,302 BC events, the summary estimate in premenopausal women showed a non-significant 8% risk reduction (SOR=0.92; 95% CI, 0.78-1.09). On the other hand, among the seven studies reporting stratified data by menopausal status, postmenopausal women experienced a significant 28% risk reduction (SOR=0.77; 95% CI, 0.69-0.87), with no statistically significant heterogeneity by menopausal status (P = 0.28). Conclusions: In a selected high-risk population, higher baseline SHBG was associated with fewer subsequent BC events. However, the meta-analysis did not provide statistically significant evidence of an inverse association with breast cancer occurrence in premenopausal women. These findings suggest that SHBG may be a biomarker of subsequent breast events in high-risk settings but do not confirm its role as a risk biomarker in the general premenopausal population.",
+      "pub_types": [
+        "Journal Article"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 5,
+      "score_reasons": [
+        "tier2:+2",
+        "synthesis:+1",
+        "high_yield_journal:+2"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    },
+    {
+      "id": "pmid:42714613",
+      "title": "Anthracycline-containing versus anthracycline-free carboplatin-based regimens in early-stage triple-negative breast cancer: real-world outcomes",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42714613/",
+      "doi": "10.1007/s10549-026-08071-8",
+      "pmid": "42714613",
+      "journal": "Breast Cancer Res Treat",
+      "published": "2026-09-09",
+      "authors": "Kroll MR, Schroeder MC, Neuner JM, et al.",
+      "abstract": "Purpose: Triple‑negative breast cancer (TNBC) is an aggressive disease with poor survival outcomes. With the integration of immunotherapy, the optimal neoadjuvant chemotherapy backbone remains poorly defined. We examined real-world treatment patterns and response rates among patients receiving a carboplatin-based regimen, with or without anthracyclines. Methods: In this retrospective cohort study, women diagnosed 2012-2024 with stage I-III TNBC who received neoadjuvant carboplatin plus taxane (CbT) or CbT with anthracyclines (AC-CbT) were identified from electronic health records data from 10 sites within the Greater Plains Collaborative network. Registry-recorded physician assessment of pathologic complete response (pCR) was the primary outcome. Multivariable logistic regression evaluated whether adding anthracyclines to carboplatin-based treatment was associated with pCR. Results: Among 878 patients with TNBC, 41.2% received CbT and 58.8% received AC-CbT. Overall, 46% received pembrolizumab, 11.7% in the CbT group and 66.3% in the AC-CbT group. On univariate analysis, pCR rates did not differ between the CbT and AC-CbT groups (47.2% vs. 51.9%, OR = 1.21, 95%CI 0.92-1.58), among patients who underwent surgery. In multivariate adjusted analyses, AC-CbT was not associated with higher odds of pCR (aOR = 1.05, 95%CI 0.69-1.59), among patients who underwent surgery. Other patient characteristics associated with pCR included pembrolizumab use, higher-grade disease, lower stage, and age at diagnosis (40-49 versus 60+). Use of carboplatin-containing regimens increased substantially over time. Conclusion: In this real-world cohort, addition of anthracycline to carboplatin-containing regimen was not associated with an improvement in pCR rates. These findings suggest clinical equipoise regarding anthracycline omission in early-stage TNBC, to be validated in prospective trials. Additional work evaluating adherence, toxicity, and long-term outcomes is needed.",
+      "pub_types": [
+        "Journal Article"
+      ],
+      "source_type": "pubmed",
+      "sources": [
+        "breast"
+      ],
+      "source_names": [
+        "Breast cancer — trials, guidelines and radiotherapy"
+      ],
+      "tier": 2,
+      "category": "pubmed",
+      "topics": [
+        "breast"
+      ],
+      "sites": [
+        "breast"
+      ],
+      "primary_site": "breast",
+      "prescore": 2,
+      "score_reasons": [
+        "tier2:+2",
+        "outcome_words:+1",
+        "retrospective:-1"
+      ],
+      "fetched_at": "2026-09-15T21:47:10+00:00"
+    }
+  ]
+}
