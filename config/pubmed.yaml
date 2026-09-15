@@ -1,0 +1,129 @@
+# PubMed E-utilities queries for ROAR 2.0.
+#
+# Each query is run with  reldate=<lookback_days>  datetype=edat  (date the record entered PubMed),
+# so nothing depends on MeSH indexing, which lags weeks behind "ahead of print" records.
+#
+# Design notes
+#  * [tiab] = title/abstract words. [ti] = title only. [jour] = journal (MEDLINE abbreviation).
+#  * Every query excludes obvious bench science; breast cancer is covered by its own query below.
+#  * "tier" and "site" are hints for the pre-scorer; the analyst makes the final call.
+#  * Queries deliberately overlap; items are de-duplicated by PMID/DOI afterwards.
+
+# Reusable fragments (expanded with {name} in the queries below)
+fragments:
+  rt_terms: >-
+    (radiotherap*[tiab] OR "radiation therapy"[tiab] OR "radiation oncology"[tiab] OR chemoradi*[tiab]
+    OR radiochemo*[tiab] OR stereotactic[tiab] OR SBRT[tiab] OR SABR[tiab] OR radiosurg*[tiab]
+    OR brachytherap*[tiab] OR "proton therapy"[tiab] OR "proton beam"[tiab] OR "carbon ion"[tiab]
+    OR hypofractionat*[tiab] OR "dose escalation"[tiab] OR irradiat*[tiab] OR "total body irradiation"[tiab]
+    OR FLASH[ti] OR radioligand*[tiab] OR radiopharmaceutical*[tiab] OR "lutetium"[tiab] OR "radium-223"[tiab]
+    OR "MR-guided"[tiab] OR "MR-Linac"[tiab] OR "adaptive radiation"[tiab] OR "adaptive radiotherapy"[tiab])
+  design_terms: >-
+    (randomi*[tiab] OR "phase 3"[tiab] OR "phase III"[tiab] OR "phase 2"[tiab] OR "phase II"[tiab]
+    OR "phase 1"[tiab] OR "phase I"[tiab] OR trial[ti] OR guideline*[tiab] OR consensus[tiab]
+    OR "meta-analysis"[tiab] OR "systematic review"[tiab] OR "long-term"[ti] OR "appropriate use"[tiab]
+    OR "patient-reported"[tiab] OR "quality of life"[ti] OR toxicit*[ti] OR "practice pattern*"[tiab]
+    OR "cost-effectiveness"[tiab] OR "real-world"[ti] OR "population-based"[tiab] OR "secondary analysis"[tiab]
+    OR "pooled analysis"[tiab] OR "individual patient data"[tiab])
+  onc_terms: >-
+    (cancer[tiab] OR carcinoma[tiab] OR tumor*[tiab] OR tumour*[tiab] OR malignan*[tiab] OR lymphoma[tiab]
+    OR leukemia[tiab] OR leukaemia[tiab] OR myeloma[tiab] OR melanoma[tiab] OR sarcoma[tiab] OR glioma[tiab]
+    OR glioblastoma[tiab] OR oncolog*[tiab] OR neoplasm*[tiab] OR metasta*[tiab])
+  exclusions: >-
+    NOT (mice[ti] OR murine[ti] OR "cell line"[ti] OR "cell lines"[ti] OR "in vitro"[ti] OR rats[ti]
+    OR zebrafish[ti] OR xenograft[ti] OR "case report"[ti])
+  radonc_journals: >-
+    ("Int J Radiat Oncol Biol Phys"[jour] OR "Radiother Oncol"[jour] OR "Pract Radiat Oncol"[jour]
+    OR "Adv Radiat Oncol"[jour] OR "Clin Transl Radiat Oncol"[jour] OR "Semin Radiat Oncol"[jour]
+    OR "Clin Oncol (R Coll Radiol)"[jour] OR "Brachytherapy"[jour] OR "Radiat Oncol"[jour]
+    OR "Strahlenther Onkol"[jour] OR "Phys Imaging Radiat Oncol"[jour] OR "J Radiosurg SBRT"[jour]
+    OR "Tech Innov Patient Support Radiat Oncol"[jour] OR "Med Phys"[jour] OR "J Appl Clin Med Phys"[jour]
+    OR "Phys Med Biol"[jour] OR "Radiat Res"[jour] OR "Int J Part Ther"[jour])
+  top_journals: >-
+    ("N Engl J Med"[jour] OR "Lancet"[jour] OR "JAMA"[jour] OR "Lancet Oncol"[jour] OR "J Clin Oncol"[jour]
+    OR "JAMA Oncol"[jour] OR "Ann Oncol"[jour] OR "Nat Med"[jour] OR "J Natl Cancer Inst"[jour]
+    OR "Cancer"[jour] OR "CA Cancer J Clin"[jour] OR "Nat Rev Clin Oncol"[jour] OR "Eur J Cancer"[jour]
+    OR "JAMA Netw Open"[jour] OR "BMJ"[jour] OR "Lancet Haematol"[jour] OR "Blood"[jour] OR "Blood Adv"[jour]
+    OR "J Thorac Oncol"[jour] OR "Eur Urol"[jour] OR "Eur Urol Oncol"[jour] OR "J Urol"[jour]
+    OR "Gynecol Oncol"[jour] OR "Int J Gynecol Cancer"[jour] OR "Head Neck"[jour] OR "Oral Oncol"[jour]
+    OR "JAMA Dermatol"[jour] OR "J Am Acad Dermatol"[jour] OR "Neuro Oncol"[jour] OR "Cancer Discov"[jour]
+    OR "Clin Cancer Res"[jour] OR "ESMO Open"[jour] OR "JCO Oncol Pract"[jour]
+    OR "Lancet Gastroenterol Hepatol"[jour] OR "Gastroenterology"[jour] OR "J Hepatol"[jour]
+    OR "Hepatology"[jour] OR "Ann Surg Oncol"[jour] OR "Ann Surg"[jour] OR "JAMA Surg"[jour]
+    OR "Leukemia"[jour] OR "Haematologica"[jour] OR "J Immunother Cancer"[jour] OR "Nat Cancer"[jour]
+    OR "JAMA Intern Med"[jour] OR "Ann Intern Med"[jour] OR "Nature"[jour] OR "Science"[jour])
+  ai_journals: >-
+    ("N Engl J Med"[jour] OR "NEJM AI"[jour] OR "Lancet"[jour] OR "JAMA"[jour] OR "Nat Med"[jour]
+    OR "Lancet Digit Health"[jour] OR "NPJ Digit Med"[jour] OR "Lancet Oncol"[jour] OR "J Clin Oncol"[jour]
+    OR "JAMA Oncol"[jour] OR "JAMA Netw Open"[jour] OR "Radiology"[jour] OR "Radiol Artif Intell"[jour]
+    OR "Int J Radiat Oncol Biol Phys"[jour] OR "Radiother Oncol"[jour] OR "Pract Radiat Oncol"[jour]
+    OR "Ann Intern Med"[jour] OR "BMJ"[jour] OR "Nature"[jour] OR "Science"[jour] OR "JAMA Intern Med"[jour]
+    OR "Med Phys"[jour] OR "Phys Imaging Radiat Oncol"[jour] OR "Clin Transl Radiat Oncol"[jour]
+    OR "Adv Radiat Oncol"[jour] OR "Ann Oncol"[jour] OR "Nat Cancer"[jour] OR "Cancer"[jour])
+  breast_journals: >-
+    ("Breast Cancer Res Treat"[jour] OR "Breast"[jour] OR "NPJ Breast Cancer"[jour] OR "Clin Breast Cancer"[jour]
+    OR "Breast Cancer Res"[jour] OR "Breast Cancer"[jour] OR "J Breast Imaging"[jour] OR "Breast J"[jour])
+  screening_journals: >-
+    ("N Engl J Med"[jour] OR "Lancet"[jour] OR "JAMA"[jour] OR "JAMA Oncol"[jour] OR "JAMA Intern Med"[jour]
+    OR "Ann Intern Med"[jour] OR "BMJ"[jour] OR "J Clin Oncol"[jour] OR "Lancet Oncol"[jour]
+    OR "J Natl Cancer Inst"[jour] OR "Cancer"[jour] OR "CA Cancer J Clin"[jour] OR "Nat Med"[jour]
+    OR "JAMA Netw Open"[jour] OR "Gastroenterology"[jour] OR "Eur Urol"[jour] OR "J Urol"[jour]
+    OR "Radiology"[jour] OR "Am J Gastroenterol"[jour] OR "Lancet Gastroenterol Hepatol"[jour]
+    OR "Lancet Public Health"[jour] OR "Lancet Digit Health"[jour])
+
+queries:
+  - id: rt_all
+    name: "Radiation therapy — any journal, clinically framed"
+    tier: 2
+    topic: radonc
+    term: "{rt_terms} AND {onc_terms} AND {design_terms} {exclusions}"
+
+  - id: radonc_journals
+    name: "Everything in the radiation oncology journals"
+    tier: 1
+    topic: radonc
+    term: "{radonc_journals} {exclusions}"
+
+  - id: top_journals_onc
+    name: "Oncology in top general and disease-site journals"
+    tier: 1
+    topic: oncology
+    term: >-
+      {top_journals} AND {onc_terms} AND (randomi*[tiab] OR "phase 3"[tiab] OR "phase III"[tiab]
+      OR "phase 2"[tiab] OR "phase II"[tiab] OR trial[ti] OR guideline*[ti] OR consensus[ti]
+      OR "meta-analysis"[ti] OR radiotherap*[tiab] OR "radiation therapy"[tiab] OR chemoradi*[tiab]
+      OR stereotactic[tiab] OR brachytherap*[tiab] OR "approval"[ti] OR "practice"[ti] OR "survival"[ti]
+      OR "screening"[ti] OR "early detection"[ti] OR "overdiagnosis"[tiab]) {exclusions}
+
+  - id: ai_medicine
+    name: "AI in medicine — high-impact journals only"
+    tier: 2
+    topic: ai
+    term: >-
+      ("artificial intelligence"[tiab] OR "machine learning"[ti] OR "deep learning"[ti]
+      OR "large language model"[tiab] OR "large language models"[tiab] OR LLM[ti] OR LLMs[ti]
+      OR ChatGPT[tiab] OR GPT-4[tiab] OR "foundation model"[tiab] OR "foundation models"[tiab]
+      OR "generative AI"[tiab] OR "auto-segmentation"[tiab] OR autosegmentation[tiab] OR autocontour*[tiab]
+      OR "ambient"[ti] OR "clinical decision support"[ti]) AND {ai_journals} {exclusions}
+
+  - id: screening
+    name: "Cancer screening — high-impact journals only"
+    tier: 2
+    topic: screening
+    term: >-
+      (screening[ti] OR "early detection"[ti] OR overdiagnosis[ti] OR "Preventive Services Task Force"[tiab]
+      OR USPSTF[tiab] OR "multicancer early detection"[tiab] OR "multi-cancer early detection"[tiab]
+      OR "low-dose CT"[tiab] OR "low-dose computed tomography"[tiab] OR "PSA screening"[tiab]
+      OR "risk-based screening"[tiab] OR "surveillance"[ti]) AND {onc_terms} AND {screening_journals}
+      {exclusions}
+
+  - id: breast
+    name: "Breast cancer — trials, guidelines and radiotherapy"
+    tier: 2
+    topic: breast
+    term: >-
+      (breast[ti] OR mammary[ti] OR DCIS[ti] OR "ductal carcinoma in situ"[ti]) AND ({rt_terms} OR randomi*[tiab]
+      OR "phase 3"[tiab] OR "phase III"[tiab] OR guideline*[ti] OR consensus[ti] OR "meta-analysis"[ti]
+      OR "long-term"[ti] OR "10-year"[tiab] OR "de-escalation"[tiab] OR omission[tiab] OR "partial breast"[tiab]
+      OR "regional nodal"[tiab] OR "postmastectomy"[tiab] OR "post-mastectomy"[tiab] OR "cardiac"[tiab])
+      AND ({top_journals} OR {radonc_journals} OR {breast_journals}) {exclusions}

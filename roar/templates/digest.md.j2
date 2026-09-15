@@ -1,0 +1,29 @@
+# {{ title }} — Week of {{ week_label }}
+
+_{{ subtitle }}_ · {{ stats_line }}
+
+{% if editor_note %}> **Editor's note.** {{ editor_note }}
+
+{% endif %}{% if top_picks %}## This week's top picks
+
+{% for p in top_picks %}{{ loop.index }}. **[{{ p.headline }}]({{ p.article_url }})**
+   _{{ p.meta }}_{% if p.tags %} · {{ p.tags | join(' · ') }}{% endif %}
+   {{ p.summary }}{% if p.why_it_matters %}
+   **Why it matters:** {{ p.why_it_matters }}{% endif %}
+   {{ p.links_md }}
+
+{% endfor %}{% endif %}{% for sec in sections %}## {{ sec.label }}
+
+{% for p in sec.entries %}- **[{{ p.headline }}]({{ p.article_url }})** — _{{ p.meta_short }}_
+  {{ p.summary }}{% if p.why_it_matters and not sec.compact %} {{ p.why_it_matters }}{% endif %}
+  {{ p.links_md }}
+{% endfor %}
+
+{% endfor %}{% if conferences %}## Coming up
+
+{% for c in conferences %}- [{{ c.name }}]({{ c.url }}) — {{ c.when }}, {{ c.location }}{% if c.days_away is not none %} ({{ c.days_away }}){% endif %}
+{% endfor %}
+
+{% endif %}---
+{{ footer_line }}{% if skipped_summary %}
+Not shown: {{ skipped_summary }}{% endif %}

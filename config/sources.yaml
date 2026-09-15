@@ -1,0 +1,331 @@
+# RSS / Atom sources for ROAR 2.0.
+#
+# tier:      1 = core radiation oncology or landmark general journals (items get a scoring boost)
+#            2 = disease-site journals, high-quality news
+#            3 = high-volume or peripheral (only strong keyword hits survive)
+# category:  radonc_journal | oncology_journal | site_journal | ai_journal | news | regulatory | preprint | newsletter | podcast
+# topic_filter: true  -> the feed is broad (NEJM, JAMA, Nature Medicine, FDA...) and items must match
+#                        oncology / radiation keywords (see interests.yaml) to be kept at all.
+# enabled:   set false to pause a feed without deleting it.
+#
+# Feed velocity (items/week) and last-update dates were checked against Feedly's index on 2026-09-15.
+
+feeds:
+  # ---------------------------------------------------------------- Radiation oncology journals
+  - id: redjournal_inpress
+    name: "Int J Radiat Oncol Biol Phys (Red Journal) — in press"
+    url: "https://www.redjournal.org/inpress.rss"
+    tier: 1
+    category: radonc_journal
+  - id: redjournal_current
+    name: "Int J Radiat Oncol Biol Phys (Red Journal) — current issue"
+    url: "https://www.redjournal.org/current.rss"
+    tier: 1
+    category: radonc_journal
+  - id: pro_inpress
+    name: "Practical Radiation Oncology — in press"
+    url: "https://www.practicalradonc.org/inpress.rss"
+    tier: 1
+    category: radonc_journal
+  - id: pro_current
+    name: "Practical Radiation Oncology — current issue"
+    url: "https://www.practicalradonc.org/current.rss"
+    tier: 1
+    category: radonc_journal
+  - id: greenjournal_inpress
+    name: "Radiotherapy and Oncology (Green Journal) — in press"
+    url: "https://www.thegreenjournal.com/inpress.rss"
+    tier: 1
+    category: radonc_journal
+  - id: advances_radonc
+    name: "Advances in Radiation Oncology"
+    url: "https://www.advancesradonc.org/current.rss"
+    tier: 2
+    category: radonc_journal
+  - id: clinical_oncology_rcr
+    name: "Clinical Oncology (Royal College of Radiologists)"
+    url: "https://www.clinicaloncologyonline.net/current.rss"
+    tier: 2
+    category: radonc_journal
+  - id: brachytherapy
+    name: "Brachytherapy"
+    url: "https://www.brachyjournal.com/inpress.rss"
+    tier: 2
+    category: radonc_journal
+  - id: semin_radonc
+    name: "Seminars in Radiation Oncology"
+    url: "https://rss.sciencedirect.com/publication/science/10534296"
+    tier: 2
+    category: radonc_journal
+  - id: ctro
+    name: "Clinical and Translational Radiation Oncology"
+    url: "https://rss.sciencedirect.com/publication/science/24056308"
+    tier: 2
+    category: radonc_journal
+  - id: phiro
+    name: "Physics and Imaging in Radiation Oncology"
+    url: "https://rss.sciencedirect.com/publication/science/24056316"
+    tier: 3
+    category: radonc_journal
+  - id: med_phys
+    name: "Medical Physics (AAPM)"
+    url: "https://aapm.onlinelibrary.wiley.com/feed/24734209/most-recent"
+    tier: 3
+    category: radonc_journal
+  - id: jacmp
+    name: "Journal of Applied Clinical Medical Physics"
+    url: "https://aapm.onlinelibrary.wiley.com/feed/15269914/most-recent"
+    tier: 3
+    category: radonc_journal
+    enabled: false   # high volume, mostly QA/technical; PubMed query catches the clinically relevant ones
+
+  # ---------------------------------------------------------------- General oncology & medicine
+  - id: jco
+    name: "Journal of Clinical Oncology"
+    url: "https://ascopubs.org/action/showFeed?type=etoc&feed=rss&jc=jco"
+    tier: 1
+    category: oncology_journal
+  - id: jco_op
+    name: "JCO Oncology Practice"
+    url: "https://ascopubs.org/action/showFeed?type=etoc&feed=rss&jc=op"
+    tier: 2
+    category: oncology_journal
+  - id: lancet_oncology
+    name: "The Lancet Oncology — online first"
+    url: "https://www.thelancet.com/rssfeed/lanonc_online.xml"
+    tier: 1
+    category: oncology_journal
+  - id: nejm
+    name: "New England Journal of Medicine"
+    url: "https://www.nejm.org/action/showFeed?jc=nejm&type=etoc&feed=rss"
+    tier: 1
+    category: oncology_journal
+    topic_filter: true
+  - id: jama_oncology
+    name: "JAMA Oncology — online first"
+    url: "https://jamanetwork.com/rss/site_159/onlineFirst_174.xml"
+    tier: 1
+    category: oncology_journal
+  - id: jama
+    name: "JAMA — online first"
+    url: "https://jamanetwork.com/rss/site_3/onlineFirst_67.xml"
+    tier: 1
+    category: oncology_journal
+    topic_filter: true
+  - id: annals_oncology
+    name: "Annals of Oncology"
+    url: "https://www.annalsofoncology.org/current.rss"
+    tier: 1
+    category: oncology_journal
+  - id: jnci_advance
+    name: "JNCI — advance articles"
+    url: "https://academic.oup.com/rss/site_5125/advanceAccess_3071.xml"
+    tier: 2
+    category: oncology_journal
+  - id: cancer_acs
+    name: "Cancer (ACS)"
+    url: "https://acsjournals.onlinelibrary.wiley.com/feed/10970142/most-recent"
+    tier: 2
+    category: oncology_journal
+  - id: ca_cancer_j_clin
+    name: "CA: A Cancer Journal for Clinicians"
+    url: "https://acsjournals.onlinelibrary.wiley.com/feed/15424863/most-recent"
+    tier: 1
+    category: oncology_journal
+  - id: nat_rev_clin_oncol
+    name: "Nature Reviews Clinical Oncology"
+    url: "https://www.nature.com/nrclinonc.rss"
+    tier: 1
+    category: oncology_journal
+  - id: nature_medicine
+    name: "Nature Medicine"
+    url: "https://www.nature.com/nm.rss"
+    tier: 1
+    category: oncology_journal
+    topic_filter: true
+  - id: nature_cancer
+    name: "Nature Cancer"
+    url: "https://www.nature.com/natcancer.rss"
+    tier: 2
+    category: oncology_journal
+    topic_filter: true
+  - id: bjc
+    name: "British Journal of Cancer"
+    url: "https://www.nature.com/bjc.rss"
+    tier: 3
+    category: oncology_journal
+  - id: ejc_inpress
+    name: "European Journal of Cancer — in press"
+    url: "https://www.ejcancer.com/inpress.rss"
+    tier: 2
+    category: oncology_journal
+  - id: esmo_open
+    name: "ESMO Open"
+    url: "https://rss.sciencedirect.com/publication/science/20597029"
+    tier: 3
+    category: oncology_journal
+  - id: lancet
+    name: "The Lancet — online first"
+    url: "https://www.thelancet.com/rssfeed/lancet_online.xml"
+    tier: 1
+    category: oncology_journal
+    topic_filter: true
+
+  # ---------------------------------------------------------------- Disease-site journals
+  - id: eur_urol_inpress
+    name: "European Urology — in press"
+    url: "https://www.europeanurology.com/inpress.rss"
+    tier: 2
+    category: site_journal
+    site: gu
+  - id: head_neck
+    name: "Head & Neck"
+    url: "https://onlinelibrary.wiley.com/feed/10970347/most-recent"
+    tier: 3
+    category: site_journal
+    site: hn
+  - id: oral_oncology
+    name: "Oral Oncology"
+    url: "https://rss.sciencedirect.com/publication/science/13688375"
+    tier: 3
+    category: site_journal
+    site: hn
+  - id: jto
+    name: "Journal of Thoracic Oncology"
+    url: "https://www.jto.org/current.rss"
+    tier: 2
+    category: site_journal
+    site: thoracic
+  - id: lancet_haematology
+    name: "The Lancet Haematology — online first"
+    url: "https://www.thelancet.com/rssfeed/lanhae_online.xml"
+    tier: 2
+    category: site_journal
+    site: heme
+  - id: neuro_oncology
+    name: "Neuro-Oncology — advance articles"
+    url: "https://academic.oup.com/rss/site_5334/advanceAccess_3200.xml"
+    tier: 3
+    category: site_journal
+    site: cns
+  - id: gyn_onc
+    name: "Gynecologic Oncology"
+    url: "https://www.gynecologiconcology-online.net/current.rss"
+    tier: 2
+    category: site_journal
+    site: gyn
+
+  # ---------------------------------------------------------------- Breast (regular section since 2026-09-15)
+  - id: the_breast
+    name: "The Breast"
+    url: "https://www.thebreastonline.com/current.rss"
+    tier: 2
+    category: site_journal
+    site: breast
+  - id: npj_breast_cancer
+    name: "npj Breast Cancer"
+    url: "https://feeds.nature.com/npjbcancer/rss/current"
+    tier: 2
+    category: site_journal
+    site: breast
+  - id: clinical_breast_cancer
+    name: "Clinical Breast Cancer"
+    url: "https://www.clinical-breast-cancer.com/current.rss"
+    tier: 3
+    category: site_journal
+    site: breast
+  - id: breast_cancer_res_treat
+    name: "Breast Cancer Research and Treatment"
+    url: "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=10549&channel-name=Breast+Cancer+Research+and+Treatment"
+    tier: 3
+    category: site_journal
+    site: breast
+    # Springer's documented search.rss pattern; run `python -m roar verify-sources` to confirm it responds.
+  - id: j_breast_imaging
+    name: "Journal of Breast Imaging — advance access"
+    url: "https://academic.oup.com/rss/site_6208/advanceAccess_4027.xml"
+    tier: 3
+    category: site_journal
+    site: breast
+    topic_filter: true
+
+  # ---------------------------------------------------------------- AI in medicine
+  - id: lancet_digital_health
+    name: "The Lancet Digital Health"
+    url: "https://www.thelancet.com/rssfeed/landig_online.xml"
+    tier: 2
+    category: ai_journal
+    topic_filter: true
+  - id: npj_digital_medicine
+    name: "npj Digital Medicine"
+    url: "https://www.nature.com/npjdigitalmed.rss"
+    tier: 3
+    category: ai_journal
+    topic_filter: true
+  - id: medrxiv_oncology
+    name: "medRxiv — oncology preprints"
+    url: "https://connect.medrxiv.org/medrxiv_xml.php?subject=oncology"
+    tier: 3
+    category: preprint
+    topic_filter: true
+
+  # ---------------------------------------------------------------- News, societies, regulatory
+  - id: asco_post
+    name: "The ASCO Post"
+    url: "https://www.ascopost.com/News/rss.aspx"
+    tier: 2
+    category: news
+  - id: onclive
+    name: "OncLive"
+    url: "https://www.onclive.com/rss.xml"
+    tier: 3
+    category: news
+  - id: healio_hemonc
+    name: "Healio Hematology/Oncology"
+    url: "https://www.healio.com/sws/feed/news/hematology-oncology"
+    tier: 3
+    category: news
+  - id: targeted_oncology
+    name: "Targeted Oncology"
+    url: "https://www.targetedonc.com/rss.xml"
+    tier: 3
+    category: news
+    enabled: false   # very high volume; enable if you want more systemic-therapy news
+  - id: cancer_network
+    name: "CancerNetwork"
+    url: "https://www.cancernetwork.com/rss.xml"
+    tier: 3
+    category: news
+    enabled: false   # very high volume
+  - id: nci_cancer_currents
+    name: "NCI Cancer Currents blog"
+    url: "https://www.cancer.gov/publishedcontent/rss/news-events/cancer-currents-blog.rss"
+    tier: 2
+    category: news
+  - id: nci_news_releases
+    name: "NCI news releases"
+    url: "https://www.cancer.gov/publishedcontent/rss/syndication/rss/ncinewsreleases.rss"
+    tier: 2
+    category: news
+  - id: fda_press
+    name: "FDA press announcements"
+    url: "https://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/press-releases/rss.xml"
+    tier: 2
+    category: regulatory
+    topic_filter: true
+  - id: cancer_letter
+    name: "The Cancer Letter"
+    url: "https://cancerletter.com/feed/"
+    tier: 3
+    category: news
+  - id: radiation_economics
+    name: "Radiation Medicine: Dollars and Sense (Substack)"
+    url: "https://radiationeconomics.substack.com/feed"
+    tier: 3
+    category: newsletter
+  - id: accelerators_podcast
+    name: "The Accelerators Podcast"
+    url: "https://feeds.buzzsprout.com/1839275.rss"
+    tier: 3
+    category: podcast
+    enabled: false   # feed looked stale when checked; enable if it resumes

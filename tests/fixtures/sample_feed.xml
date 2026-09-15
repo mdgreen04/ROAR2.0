@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:prism="http://prismstandard.org/namespaces/basic/2.0/">
+  <channel rdf:about="https://www.redjournal.org/inpress.rss">
+    <title>International Journal of Radiation Oncology, Biology, Physics</title>
+    <link>https://www.redjournal.org/inpress</link>
+    <description>Articles in press</description>
+  </channel>
+  <item rdf:about="https://www.redjournal.org/article/S0360-3016(26)01234-5/fulltext">
+    <title>Stereotactic Body Radiation Therapy Versus Conventional Radiation Therapy for Localized Prostate Cancer: 7-Year Results of the PACE-B Randomized Trial</title>
+    <link>https://www.redjournal.org/article/S0360-3016(26)01234-5/fulltext?rss=yes</link>
+    <description>Purpose: PACE-B randomized men with low/intermediate-risk prostate cancer to 5-fraction SBRT or conventional fractionation. Results: 7-year biochemical control was noninferior (HR 0.98).</description>
+    <dc:identifier>doi:10.1016/j.ijrobp.2026.01.001</dc:identifier>
+    <dc:date>2026-09-12T00:00:00Z</dc:date>
+    <dc:creator>Tree AC</dc:creator>
+  </item>
+  <item rdf:about="https://www.redjournal.org/article/S0360-3016(26)01235-7/fulltext">
+    <title>Ultra-Hypofractionated Whole Breast Irradiation: A Single-Institution Experience</title>
+    <link>https://www.redjournal.org/article/S0360-3016(26)01235-7/fulltext?rss=yes</link>
+    <description>A retrospective review of 26 Gy in 5 fractions for early breast cancer at our institution.</description>
+    <dc:identifier>doi:10.1016/j.ijrobp.2026.01.002</dc:identifier>
+    <dc:date>2026-09-11T00:00:00Z</dc:date>
+  </item>
+  <item rdf:about="https://www.redjournal.org/article/S0360-3016(26)01236-9/fulltext">
+    <title>In Reply to Smith et al.</title>
+    <link>https://www.redjournal.org/article/S0360-3016(26)01236-9/fulltext?rss=yes</link>
+    <description>We thank the authors for their interest.</description>
+    <dc:date>2026-09-10T00:00:00Z</dc:date>
+  </item>
+  <item rdf:about="https://www.redjournal.org/article/S0360-3016(25)09999-9/fulltext">
+    <title>An Old Article From Last Year On Adaptive Radiotherapy</title>
+    <link>https://www.redjournal.org/article/S0360-3016(25)09999-9/fulltext?rss=yes</link>
+    <description>Adaptive radiotherapy for bladder cancer.</description>
+    <dc:date>2025-01-10T00:00:00Z</dc:date>
+  </item>
+</rdf:RDF>

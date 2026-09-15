@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2024//EN" "https://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_240101.dtd">
+<PubmedArticleSet>
+<PubmedArticle>
+  <MedlineCitation Status="Publisher" Owner="NLM">
+    <PMID Version="1">42727425</PMID>
+    <Article PubModel="Print-Electronic">
+      <Journal>
+        <ISOAbbreviation>Clin Oncol (R Coll Radiol)</ISOAbbreviation>
+        <JournalIssue CitedMedium="Internet"><Volume>59</Volume><PubDate><Year>2026</Year><Month>Aug</Month><Day>22</Day></PubDate></JournalIssue>
+        <Title>Clinical oncology (Royal College of Radiologists (Great Britain))</Title>
+      </Journal>
+      <ArticleTitle>Whole-pelvic Versus Prostate-only Radiotherapy in Clinically Node-negative High-Risk Localised Prostate Cancer: A Systematic Review and Meta-analysis with Reconstructed Individual-patient Data.</ArticleTitle>
+      <ELocationID EIdType="doi" ValidYN="Y">10.1016/j.clon.2026.104329</ELocationID>
+      <Abstract>
+        <AbstractText Label="AIMS" NlmCategory="OBJECTIVE">Whether elective whole-pelvic radiotherapy improves outcomes over prostate-only radiotherapy remains an open question.</AbstractText>
+        <AbstractText Label="RESULTS" NlmCategory="RESULTS">Four trials (n=2,500). Pooled HR for overall survival 0.97 (95% CI 0.85-1.10).</AbstractText>
+        <AbstractText Label="CONCLUSION" NlmCategory="CONCLUSIONS">No survival benefit was observed.</AbstractText>
+      </Abstract>
+      <AuthorList CompleteYN="Y"><Author ValidYN="Y"><LastName>Doe</LastName><Initials>J</Initials></Author></AuthorList>
+      <PublicationTypeList><PublicationType UI="D016428">Journal Article</PublicationType><PublicationType UI="D017418">Meta-Analysis</PublicationType></PublicationTypeList>
+      <ArticleDate DateType="Electronic"><Year>2026</Year><Month>08</Month><Day>22</Day></ArticleDate>
+    </Article>
+  </MedlineCitation>
+  <PubmedData>
+    <ArticleIdList><ArticleId IdType="pubmed">42727425</ArticleId><ArticleId IdType="doi">10.1016/j.clon.2026.104329</ArticleId></ArticleIdList>
+  </PubmedData>
+</PubmedArticle>
+<PubmedArticle>
+  <MedlineCitation Status="Publisher" Owner="NLM">
+    <PMID Version="1">42715505</PMID>
+    <Article PubModel="Print-Electronic">
+      <Journal><ISOAbbreviation>J Clin Oncol</ISOAbbreviation><JournalIssue CitedMedium="Internet"><PubDate><MedlineDate>2026 Sep 9</MedlineDate></PubDate></JournalIssue><Title>Journal of clinical oncology</Title></Journal>
+      <ArticleTitle>Personalized ctDNA Analysis in Localized Sarcomas: SU2C-SARC032.</ArticleTitle>
+      <Abstract><AbstractText>ctDNA tracked response to radiotherapy and pembrolizumab in 106 patients.</AbstractText></Abstract>
+      <PublicationTypeList><PublicationType UI="D016428">Journal Article</PublicationType></PublicationTypeList>
+    </Article>
+  </MedlineCitation>
+  <PubmedData><ArticleIdList><ArticleId IdType="pubmed">42715505</ArticleId><ArticleId IdType="doi">10.1200/JCO-26-00769</ArticleId></ArticleIdList></PubmedData>
+</PubmedArticle>
+</PubmedArticleSet>

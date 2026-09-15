@@ -1,0 +1,80 @@
+# ROAR 2.0 — Radiation Oncology Aggregator Resource
+# Global settings. Secrets (SMTP password, API keys) never go here: use .env / GitHub secrets.
+
+digest:
+  title: "ROAR 2.0"
+  subtitle: "Radiation Oncology Aggregator Resource"
+  # Where the digest goes. Override with the ROAR_TO environment variable / GitHub secret so the
+  # address does not have to live in a public repository.
+  recipient: "you@example.com"
+  from_name: "ROAR 2.0"
+  timezone: "America/Anchorage"
+  # How many days back to look. 8 covers a weekly cadence with one day of slack.
+  lookback_days: 8
+  # Output directory: one sub-folder per digest date (YYYY-MM-DD, the Monday of delivery).
+  output_dir: "digests"
+  state_file: "state/seen.json"
+  # Weeks to remember an item id so it is never shown twice.
+  seen_ttl_days: 120
+
+# Candidate limits: how much reaches the analyst (LLM or Claude in Cowork).
+candidates:
+  max_total: 160          # hard cap on items handed to the analyst
+  max_per_source: 25      # per RSS feed / PubMed query, after pre-scoring
+  min_prescore: 1         # items scoring below this are dropped before analysis
+  abstract_chars: 2600    # abstracts are trimmed to this length for the analyst (results/conclusions sit at the end)
+
+# Final digest shape. The analyst decides what is interesting; these are ceilings.
+digest_shape:
+  top_picks: 10           # "This week's top picks" (score >= top_pick_min_score)
+  top_pick_min_score: 75
+  max_items: 40           # everything else combined
+  tidbits_per_section: 4  # ceilings for the "briefly noted" sections (screening, ai)
+  section_order:
+    - top
+    - radonc
+    - gu
+    - gi
+    - hn
+    - cutaneous
+    - heme
+    - gyn
+    - breast
+    - thoracic
+    - cns
+    - other_sites
+    - systemic
+    - policy
+    - screening
+    - ai
+
+# Full-text access. Any link is also offered through the U-M library proxy.
+links:
+  proxy_prefix: "https://proxy.lib.umich.edu/login?url="
+  pubmed_base: "https://pubmed.ncbi.nlm.nih.gov/"
+  doi_base: "https://doi.org/"
+
+# Analyst backend: "file" (Cowork/Claude writes analysis.json), "anthropic" (API), or "none" (keyword-only digest).
+analysis:
+  backend: "file"
+  anthropic_model: "claude-sonnet-5"
+  anthropic_max_tokens: 16000
+  # For the "none" backend: how many of the pre-scored items to include.
+  keyword_only_max_items: 40
+
+# Email transport: "smtp" (Gmail app password via env), "gmail_api" (not implemented), or "file" (write .eml + .html only).
+email:
+  transport: "file"
+  smtp_host: "smtp.gmail.com"
+  smtp_port: 587
+  # username / password come from ROAR_SMTP_USER / ROAR_SMTP_PASSWORD environment variables.
+
+pubmed:
+  # Identify ourselves to NCBI. Set NCBI_API_KEY in the environment for 10 req/s instead of 3.
+  tool: "ROAR2.0"
+  # Contact address sent with every E-utilities request (NCBI policy). Override with ROAR_NCBI_EMAIL;
+  # the GitHub workflow uses the repository owner's noreply address unless a secret is set.
+  email: "roar2@example.com"
+  retmax_per_query: 400
+  # Stage 2 (abstracts) is only fetched for the top N items after pre-scoring on titles/journals.
+  abstracts_for_top: 220

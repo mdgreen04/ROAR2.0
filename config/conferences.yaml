@@ -1,0 +1,55 @@
+# Meetings shown in the "Coming up" footer when they fall within `horizon_days`.
+# Dates checked 2026-09-15; "provisional" entries should be re-verified when their year approaches.
+horizon_days: 75
+
+meetings:
+  - name: "ASTRO 2026 Annual Meeting"
+    start: 2026-09-26
+    end: 2026-09-30
+    location: "Boston, MA"
+    url: "https://www.astro.org/meetings-and-education/annual-meeting"
+  - name: "ESMO Congress 2026"
+    start: 2026-10-23
+    end: 2026-10-27
+    location: "Madrid, Spain"
+    url: "https://www.esmo.org/meeting-calendar/esmo-congress-2026"
+  - name: "SABCS 2026"
+    start: 2026-12-08
+    end: 2026-12-11
+    location: "San Antonio, TX"
+    url: "https://www.sabcs.org/"
+  - name: "ASH 2026 Annual Meeting"
+    start: 2026-12-12
+    end: 2026-12-15
+    location: "New Orleans, LA"
+    url: "https://www.hematology.org/meetings/annual-meeting"
+  - name: "ASCO GI 2027"
+    start: 2027-01-21
+    end: 2027-01-23
+    location: "San Francisco, CA"
+    url: "https://meetings.asco.org/gi"
+  - name: "ASCO GU 2027"
+    start: 2027-02-11
+    end: 2027-02-13
+    location: "San Francisco, CA"
+    url: "https://meetings.asco.org/gu"
+  - name: "SGO 2027 Annual Meeting on Women's Cancer"
+    start: 2027-03-19
+    end: 2027-03-22
+    location: "Phoenix, AZ"
+    url: "https://www.sgo.org/events/annual-meeting/"
+  - name: "ESTRO 2027"
+    start: 2027-05-21
+    end: 2027-05-25
+    location: "Milan, Italy"
+    url: "https://www.estro.org/Congresses"
+  - name: "ASCO 2027 Annual Meeting (dates provisional)"
+    start: 2027-06-04
+    end: 2027-06-08
+    location: "Chicago, IL"
+    url: "https://meetings.asco.org/annual"
+  - name: "ASTRO 2027 Annual Meeting"
+    start: 2027-09-18
+    end: 2027-09-22
+    location: "Chicago, IL"
+    url: "https://www.astro.org/meetings-and-education/annual-meeting"

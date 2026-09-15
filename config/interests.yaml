@@ -1,0 +1,180 @@
+# What Mike cares about. Used two ways:
+#   1. The pre-scorer (roar/prescore.py) turns these into a quick keyword score so only plausible
+#      candidates reach the analyst.
+#   2. The analyst prompt (roar/prompts/analyst.md) embeds `profile` verbatim so the LLM / Claude ranks
+#      and summarises with the same priorities.
+# Edit freely; nothing here is code.
+
+profile: |
+  Reader: a practising radiation oncologist (community/academic hybrid practice in Alaska, University of
+  Michigan library access) who wants to stay current on advances in oncology with a strong emphasis on
+  RADIATION ONCOLOGY. Disease sites of particular interest: gastrointestinal, genitourinary, head and neck,
+  cutaneous, hematologic and gynecologic malignancies. Breast, thoracic, CNS, sarcoma and palliative
+  radiotherapy are covered too, as regular sections rather than the main emphasis: for breast, keep the
+  items that change radiation practice (fractionation, partial-breast and omission trials, nodal RT,
+  reconstruction-RT interactions, cardiac sparing, landmark systemic trials) and skip the rest.
+
+  Highest value (lead with these):
+   - Randomized trials, long-term follow-up of practice-defining trials, and meta-analyses that change or
+     confirm radiotherapy indications, dose/fractionation (hypofractionation, SBRT/SABR, brachytherapy),
+     target volumes, or combinations with systemic therapy (RT + immunotherapy, radioligand therapy).
+   - Guidelines, consensus statements and appropriate-use criteria (ASTRO, ESTRO, NCCN, ARS, ASCO).
+   - Technology that is changing practice now: online adaptive RT / MR-Linac, protons and particle therapy,
+     FLASH, auto-segmentation and AI planning, PSMA/other theranostics, surface guidance.
+   - Toxicity, survivorship and patient-reported outcome data that inform daily counselling.
+   - Practice-changing systemic-therapy trials in the disease sites above (e.g. a new standard of care in
+     head and neck, GU, GI, GYN, cutaneous or heme malignancies) — a radiation oncologist needs to know
+     these even when RT is not the intervention.
+   - Regulatory / policy: FDA approvals in these sites, CMS payment changes affecting radiation oncology
+     (ROCR, prior authorization), workforce and access issues.
+
+  Lower value ("briefly noted" only, pick the 2–4 most interesting): cancer screening and early detection
+  (USPSTF, multi-cancer early detection, lung/colorectal/prostate screening) and the integration of AI in
+  medicine (LLMs in clinic, ambient documentation, AI imaging, evidence of real-world benefit or harm).
+
+  Skip: bench/pre-clinical work, single-institution retrospective series without a clear clinical message,
+  study protocols, case reports, letters/errata, editorials that add nothing, pediatric oncology unless
+  radiotherapy-defining, and duplicate coverage of the same result (keep one).
+
+# Disease-site classification. First match wins for a primary site, but items may carry several sites.
+sites:
+  gu:
+    label: "Genitourinary"
+    terms: [prostate, bladder, urothelial, kidney, "renal cell", testicular, seminoma, "germ cell", penile,
+            psma, "androgen deprivation", castration, "radical prostatectomy", "active surveillance"]
+  gi:
+    label: "Gastrointestinal"
+    terms: [esophag, oesophag, gastric, stomach, pancrea, rectal, rectum, "anal canal", "anal cancer",
+            "anal squamous", colorectal, "colon cancer", hepatocellular, "liver metasta", biliary,
+            cholangiocarcinoma, gastroesophageal, "gastro-oesophageal", "total neoadjuvant", "watch-and-wait",
+            "organ preservation"]
+  hn:
+    label: "Head & Neck"
+    terms: ["head and neck", oropharyn, laryn, hypopharyn, nasopharyn, "oral cavity", "oral cancer",
+            thyroid, salivary, hnscc, "hpv-positive", "hpv-associated", sinonasal, "tongue", "oral squamous"]
+  cutaneous:
+    label: "Cutaneous"
+    terms: [melanoma, merkel, "cutaneous squamous", cscc, "basal cell", "skin cancer", keratinocyte,
+            "nonmelanoma skin", "non-melanoma skin"]
+  heme:
+    label: "Hematologic"
+    terms: [lymphoma, hodgkin, myeloma, plasmacytoma, leukemia, leukaemia, "mycosis fungoides",
+            "cutaneous t-cell", "total body irradiation", "car-t", "car t", bispecific, "stem cell transplant",
+            "myelodysplastic"]
+  gyn:
+    label: "Gynecologic"
+    terms: ["cervical cancer", "cervix", endometrial, uterine, vulvar, vaginal, ovarian, gynecolog,
+            gynaecolog, "cervical carcinoma"]
+  thoracic:
+    label: "Thoracic"
+    terms: ["lung cancer", nsclc, sclc, "small cell", "non-small", mesothelioma, thymoma, thymic,
+            "stage iii nsclc"]
+  cns:
+    label: "CNS"
+    terms: [glioma, glioblastoma, meningioma, "brain metasta", medulloblastoma, ependymoma,
+            "vestibular schwannoma", pituitary, "spinal cord compression", "leptomeningeal", astrocytoma]
+  other_sites:
+    label: "Other sites & palliative"
+    terms: [sarcoma, "bone metasta", oligometasta, palliative, "spine metasta", "spinal metasta",
+            pediatric, paediatric, benign, keloid, "heterotopic ossification", desmoid, "oligoprogress"]
+  breast:
+    label: "Breast"
+    terms: [breast, mammary, "ductal carcinoma in situ", dcis, mastectomy, lumpectomy, "partial breast",
+            "whole breast", "regional nodal irradiation", "internal mammary"]
+
+# Sites that get an extra point in the pre-score.
+emphasis_sites: [gu, gi, hn, cutaneous, heme, gyn]
+
+# Keyword scoring. Matching is case-insensitive on title + abstract/summary (+ journal for `journals`).
+scoring:
+  tier_bonus: {1: 3, 2: 2, 3: 0}
+  emphasis_site_points: 1
+  rules:
+    - name: rt_core
+      points: 3
+      any: [radiotherap, "radiation therapy", "radiation oncology", chemoradi, radiochemo, stereotactic,
+            sbrt, sabr, radiosurg, brachytherap, "proton therapy", "proton beam", "carbon ion", hypofraction,
+            irradiat, "dose escalation", "mr-linac", "mr-guided", "adaptive radi", flash, radioligand,
+            radiopharmaceutical, "lutetium", "radium-223", "gray", " gy "]
+    - name: randomized
+      points: 3
+      any: [randomi, "phase 3", "phase iii", "phase-3", "phase-iii"]
+    - name: phase2
+      points: 2
+      any: ["phase 2", "phase ii", "phase-2", "phase-ii"]
+    - name: guideline
+      points: 3
+      any: [guideline, "consensus", "appropriate use", "recommendation", "practice statement", "position paper",
+            "clinical practice"]
+    - name: synthesis
+      points: 1
+      any: ["meta-analysis", "meta-analyses", "systematic review", "pooled analysis", "individual patient data",
+            "individual participant data", "umbrella review"]
+    - name: outcome_words
+      points: 1
+      any: ["overall survival", "noninferior", "non-inferior", "superior", "practice-changing",
+            "standard of care", "long-term", "10-year", "5-year", "patient-reported", "quality of life",
+            "late toxicity"]
+    - name: technology
+      points: 1
+      any: [adaptive, "auto-segmentation", autosegmentation, autocontour, "proton", "flash", "mr-linac",
+            "theranostic", "surface-guided", "surface guided", "knowledge-based planning", "dose painting"]
+    - name: ai
+      points: 1
+      any: ["artificial intelligence", "machine learning", "deep learning", "large language model",
+            chatgpt, "gpt-4", "foundation model", "generative ai", " llm", "ambient scribe",
+            "ambient documentation", "ambient ai", "radiomics"]
+    - name: screening
+      points: 1
+      any: [screening, "early detection", overdiagnosis, uspstf, "preventive services task force",
+            "multicancer early detection", "multi-cancer early detection"]
+    - name: policy
+      points: 2
+      any: [medicare, " cms ", reimbursement, "payment model", " rocr", "prior authorization",
+            "prior authorisation", workforce, "fda approv", "approves", "approval of", "accelerated approval",
+            "label expansion"]
+    - name: society_news
+      points: 1
+      any: [astro, estro, nccn, "american radium society", " asco ", esmo, "red journal"]
+    - name: retrospective
+      points: -1
+      any: [retrospective, "single-center", "single-centre", "single-institution", "single institution",
+            "our institution", "our experience", "nomogram"]
+    - name: protocol
+      points: -3
+      any: ["study protocol", "protocol for a", "protocol of a", "trial protocol", "design and rationale"]
+    - name: case_report
+      points: -4
+      any: ["case report", "case series", "a case of", "rare case", "unusual case"]
+    - name: bench
+      points: -4
+      any: ["in vitro", "cell line", "mice", "murine", xenograft, zebrafish, "rat model", "organoid",
+            "molecular mechanism", "signaling pathway", "signalling pathway", "mirna", "lncrna", "circrna"]
+    - name: pediatric
+      points: -1
+      any: [pediatric, paediatric, children, childhood]
+    - name: correspondence
+      points: -3
+      any: ["letter to the editor", "in reply", "reply to", erratum, "correction to", corrigendum, retraction,
+            "author response", "response to", "comment on", "authors' reply", "in response"]
+    - name: narrative_review
+      points: -1
+      any: ["narrative review", "a review", "an overview", "mini-review", "state of the art", "the role of"]
+    - name: low_yield_journal
+      points: -2
+      journals: [cureus, "front oncol", "frontiers in oncology", "cancers (basel)", "medicine (baltimore)",
+                 "int j mol sci", "biomedicines", "j clin med", "diagnostics (basel)", "world j", "oncol lett",
+                 "exp ther med", "asian pac j cancer prev", "cancer manag res", "onco targets", "in vivo",
+                 "anticancer res", "ecancermedicalscience", "j cancer res ther", "indian j", "chin clin oncol",
+                 "front immunol", "front pharmacol", "biorxiv", "cell rep"]
+    - name: high_yield_journal
+      points: 2
+      journals: ["n engl j med", "lancet", "jama", "nat med", "j clin oncol", "lancet oncol", "jama oncol",
+                 "ann oncol", "int j radiat oncol biol phys", "radiother oncol", "pract radiat oncol",
+                 "nat rev clin oncol", "ca cancer j clin", "j natl cancer inst", "eur urol", "blood"]
+
+# Broad feeds (topic_filter: true in sources.yaml) must match one of these to be kept at all.
+topic_filter_terms: [cancer, carcinoma, tumor, tumour, oncolog, malignan, lymphoma, leukemia, leukaemia,
+                     myeloma, melanoma, sarcoma, glioma, radiotherap, radiation, metasta, chemotherap,
+                     immunotherap, neoplasm, "checkpoint inhibitor", screening, "large language model",
+                     "artificial intelligence", "machine learning", "deep learning", chatgpt, "ambient"]

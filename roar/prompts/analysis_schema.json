@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ROAR 2.0 analysis.json",
+  "type": "object",
+  "required": ["week_of", "editor_note", "picks"],
+  "additionalProperties": false,
+  "properties": {
+    "week_of": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "editor_note": {"type": "string", "minLength": 1},
+    "skipped_summary": {"type": "string"},
+    "picks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "section", "score", "headline", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string"},
+          "top": {"type": "boolean"},
+          "section": {
+            "type": "string",
+            "enum": ["radonc", "gu", "gi", "hn", "cutaneous", "heme", "gyn", "breast", "thoracic", "cns",
+                     "other_sites", "systemic", "policy", "screening", "ai"]
+          },
+          "score": {"type": "integer", "minimum": 0, "maximum": 100},
+          "headline": {"type": "string", "maxLength": 140},
+          "summary": {"type": "string"},
+          "why_it_matters": {"type": "string"},
+          "tags": {"type": "array", "items": {"type": "string"}, "maxItems": 6}
+        }
+      }
+    }
+  }
+}

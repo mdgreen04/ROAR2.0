@@ -1,0 +1,9 @@
+feedparser>=6.0
+requests>=2.31
+PyYAML>=6.0
+Jinja2>=3.1
+python-dateutil>=2.8
+# optional: only for the `anthropic` analysis backend
+anthropic>=0.40
+# tests
+pytest>=7
