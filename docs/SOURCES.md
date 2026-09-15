@@ -26,6 +26,16 @@ Feeds add what PubMed cannot: news, society and regulatory items, preprints, and
 that appear days before PubMed indexes them. All URLs were checked against Feedly's index on 2026-09-15
 (velocity = items/week).
 
+**Cloud-IP blocking.** The first run from GitHub Actions (2026-09-15) showed that Elsevier journal sites
+(Red Journal, PRO, Green Journal, Advances, Clinical Oncology, Brachytherapy, EJC, Eur Urol, JTO, Gyn Onc,
+The Breast, Clinical Breast Cancer, Annals of Oncology), Wiley (Medical Physics, JACMP, Cancer, CA, Head &
+Neck), The Lancet family, NEJM, OncLive and Substack answer HTTP 403 to requests from cloud IP ranges. The
+fetcher therefore tries three routes per feed: the polite ROAR user agent, then browser-like headers, then
+Feedly's public stream cache (`cloud.feedly.com/v3/streams/contents?streamId=feed/<url>`), which keeps
+polling those feeds from its own servers. `python -m roar verify-sources` prints which route worked
+(`via browser-ua` / `via feedly`). Every journal in the blocked list is also covered by the PubMed queries,
+so a feed that fails outright costs at most a few days of lead time on "in press" items.
+
 | feed | tier | velocity | note |
 |---|---|---|---|
 | Red Journal in press / current | 1 | ~11 | |
