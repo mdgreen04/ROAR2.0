@@ -242,7 +242,9 @@ def cmd_verify_sources(args, cfg: dict) -> int:
             continue
         from .fetch_rss import _entry_date
         dates = sorted((d for d in (_entry_date(e) for e in parsed.entries) if d), reverse=True)
-        print(f"{f['id']:30} {'ok':8} {len(parsed.entries):7}  {dates[0] if dates else 'undated'}")
+        via = getattr(parsed, "roar_via", "direct")
+        print(f"{f['id']:30} {'ok':8} {len(parsed.entries):7}  {dates[0] if dates else 'undated'}"
+              f"{'' if via == 'direct' else '  via ' + via}")
     pm = cfg["settings"]["pubmed"]
     client = PubMedClient(session, pm["tool"], os.environ.get("ROAR_NCBI_EMAIL") or pm["email"])
     frags = cfg["pubmed"].get("fragments", {})

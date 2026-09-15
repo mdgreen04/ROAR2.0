@@ -116,19 +116,114 @@ def _clean_feed_title(feed_title: str, fallback: str) -> str:
     return t or fallback
 
 
+BROWSER_HEADERS = {
+    # Many publisher sites (Elsevier "Health Advance" journals, Wiley, Lancet, NEJM, Substack) answer 403 to
+    # anything that does not look like a browser, especially from cloud IP ranges such as GitHub Actions.
+    "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+                   "Chrome/128.0.0.0 Safari/537.36"),
+    "Accept": "application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.8, */*;q=0.5",
+    "Accept-Language": "en-US,en;q=0.9",
+}
+FEEDLY_STREAM = "https://cloud.feedly.com/v3/streams/contents"
+
+
+def _parse_bytes(content: bytes):
+    parsed = feedparser.parse(content)
+    if parsed.bozo and not parsed.entries:
+        return None, f"parse error: {getattr(parsed, 'bozo_exception', 'unknown')}"
+    return parsed, None
+
+
+def _feedly_fallback(session, url: str, timeout: int, count: int = 40):
+    """Read the feed through Feedly's public stream cache and rebuild it as RSS for feedparser.
+
+    Feedly keeps polling most journal feeds from its own infrastructure, so this works for feeds whose
+    publishers block cloud IP ranges. Unauthenticated access is rate-limited, so it is only used as a
+    fallback."""
+    import json
+    from email.utils import formatdate
+    from xml.sax.saxutils import escape
+
+    r = session.get(FEEDLY_STREAM, params={"streamId": f"feed/{url}", "count": count},
+                    headers={"Accept": "application/json", "User-Agent": BROWSER_HEADERS["User-Agent"]},
+                    timeout=timeout)
+    if r.status_code >= 400:
+        return None, f"feedly HTTP {r.status_code}"
+    data = json.loads(r.text)
+    items = data.get("items") or []
+    if not items:
+        return None, "feedly: no items"
+    parts = ['<?xml version="1.0" encoding="utf-8"?><rss version="2.0"><channel>',
+             f"<title>{escape(str(data.get('title') or url))}</title>"]
+    for it in items:
+        link = ""
+        for alt in it.get("alternate") or []:
+            if alt.get("href"):
+                link = alt["href"]
+                break
+        link = link or it.get("canonicalUrl") or it.get("originId") or ""
+        body = ((it.get("content") or {}).get("content")) or ((it.get("summary") or {}).get("content")) or ""
+        ts = it.get("published") or it.get("crawled")
+        pub = formatdate(ts / 1000.0, usegmt=True) if ts else ""
+        parts.append("<item>")
+        parts.append(f"<title>{escape(str(it.get('title') or ''))}</title>")
+        if link:
+            parts.append(f"<link>{escape(str(link))}</link>")
+        if it.get("originId"):
+            parts.append(f"<guid isPermaLink=\"false\">{escape(str(it['originId']))}</guid>")
+        if pub:
+            parts.append(f"<pubDate>{pub}</pubDate>")
+        if it.get("author"):
+            parts.append(f"<author>{escape(str(it['author']))}</author>")
+        if body:
+            parts.append(f"<description>{escape(str(body))}</description>")
+        parts.append("</item>")
+    parts.append("</channel></rss>")
+    return _parse_bytes("".join(parts).encode("utf-8"))
+
+
 def fetch_feed(session, feed_cfg: dict, timeout: int = 30):
-    """Download and parse one feed. Returns (parsed, error)."""
+    """Download and parse one feed. Returns (parsed, error).
+
+    Order of attempts: polite UA -> browser-like headers -> Feedly's public stream cache. The route that
+    worked is recorded on the parsed object as ``parsed.roar_via`` ("direct" | "browser-ua" | "feedly")."""
     url = feed_cfg["url"]
+    errors: list[str] = []
     try:
         r = session.get(url, timeout=timeout)
-        if r.status_code >= 400:
-            return None, f"HTTP {r.status_code}"
-        parsed = feedparser.parse(r.content)
-        if parsed.bozo and not parsed.entries:
-            return None, f"parse error: {getattr(parsed, 'bozo_exception', 'unknown')}"
-        return parsed, None
+        if r.status_code < 400:
+            parsed, err = _parse_bytes(r.content)
+            if parsed is not None:
+                parsed.roar_via = "direct"
+                return parsed, None
+            errors.append(err)
+        else:
+            errors.append(f"HTTP {r.status_code}")
     except Exception as exc:  # network errors, timeouts
-        return None, f"{type(exc).__name__}: {exc}"
+        errors.append(f"{type(exc).__name__}: {exc}")
+
+    try:
+        r = session.get(url, headers=BROWSER_HEADERS, timeout=timeout)
+        if r.status_code < 400:
+            parsed, err = _parse_bytes(r.content)
+            if parsed is not None:
+                parsed.roar_via = "browser-ua"
+                return parsed, None
+            errors.append("browser-ua " + err)
+        else:
+            errors.append(f"browser-ua HTTP {r.status_code}")
+    except Exception as exc:
+        errors.append(f"browser-ua {type(exc).__name__}: {exc}")
+
+    try:
+        parsed, err = _feedly_fallback(session, url, timeout)
+        if parsed is not None:
+            parsed.roar_via = "feedly"
+            return parsed, None
+        errors.append(err)
+    except Exception as exc:
+        errors.append(f"feedly {type(exc).__name__}: {exc}")
+    return None, "; ".join(errors)
 
 
 def fetch_all(cfg: dict, session=None, *, only: set[str] | None = None) -> tuple[list[Item], list[dict]]:
@@ -155,8 +250,10 @@ def fetch_all(cfg: dict, session=None, *, only: set[str] | None = None) -> tuple
             continue
         kept = entries_to_items(feed_cfg, parsed, lookback_days=lookback, abstract_chars=abstract_chars,
                                 topic_terms=topic_terms)
-        log.info("feed %-28s %3d entries -> %3d kept (%.1fs)", feed_cfg["id"], len(parsed.entries),
-                 len(kept), time.time() - t0)
-        report.append({"id": feed_cfg["id"], "ok": True, "entries": len(parsed.entries), "kept": len(kept)})
+        via = getattr(parsed, "roar_via", "direct")
+        log.info("feed %-28s %3d entries -> %3d kept (%.1fs, %s)", feed_cfg["id"], len(parsed.entries),
+                 len(kept), time.time() - t0, via)
+        report.append({"id": feed_cfg["id"], "ok": True, "entries": len(parsed.entries), "kept": len(kept),
+                       "via": via})
         items.extend(kept)
     return items, report
