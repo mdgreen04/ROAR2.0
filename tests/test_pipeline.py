@@ -256,3 +256,43 @@ def test_analyst_input_is_compact(cfg):
     text = build_analyst_input(cands, cfg, "2026-09-14")
     assert "pmid:1 |" in text and "## 1. PACE-B 7-year results" in text
     assert len(text) < 3000
+
+
+def test_fetch_feed_falls_back_to_browser_ua_then_feedly():
+    """Publishers that 403 cloud IPs: retry with browser headers, then Feedly's public stream cache."""
+    from roar import fetch_rss
+
+    class Resp:
+        def __init__(self, code, text=""):
+            self.status_code, self.text = code, text
+            self.content = text.encode("utf-8")
+
+    class Session:
+        def __init__(self, browser_ok):
+            self.browser_ok, self.calls = browser_ok, []
+
+        def get(self, url, **kw):
+            self.calls.append(url)
+            if url.startswith(fetch_rss.FEEDLY_STREAM):
+                return Resp(200, '{"title":"Red Journal","items":[{"title":"A trial","published":1789400000000,'
+                                 '"alternate":[{"href":"https://doi.org/10.1016/j.ijrobp.2026.1"}],'
+                                 '"originId":"10.1016/j.ijrobp.2026.1","author":"Smith J",'
+                                 '"summary":{"content":"<p>Abstract text</p>"}}]}')
+            if kw.get("headers", {}).get("User-Agent", "").startswith("Mozilla") and self.browser_ok:
+                return Resp(200, '<?xml version="1.0"?><rss version="2.0"><channel><title>RJ</title>'
+                                 '<item><title>Direct item</title><link>https://x/1</link></item></channel></rss>')
+            return Resp(403)
+
+    feed = {"id": "redjournal_inpress", "name": "RJ", "url": "https://www.redjournal.org/inpress.rss"}
+    s = Session(browser_ok=True)
+    parsed, err = fetch_rss.fetch_feed(s, feed)
+    assert err is None and parsed.roar_via == "browser-ua" and parsed.entries[0].title == "Direct item"
+
+    s = Session(browser_ok=False)
+    parsed, err = fetch_rss.fetch_feed(s, feed)
+    assert err is None and parsed.roar_via == "feedly"
+    e = parsed.entries[0]
+    assert e.title == "A trial" and e.link == "https://doi.org/10.1016/j.ijrobp.2026.1"
+    assert fetch_rss._entry_doi(e) == "10.1016/j.ijrobp.2026.1"
+    assert fetch_rss._entry_date(e) is not None and "Abstract text" in fetch_rss._entry_summary(e)
+    assert len(s.calls) == 3
