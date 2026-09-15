@@ -273,7 +273,11 @@ def test_fetch_feed_falls_back_to_browser_ua_then_feedly():
 
         def get(self, url, **kw):
             self.calls.append(url)
+            if url.startswith(fetch_rss.FEEDLY_SEARCH):
+                return Resp(200, '{"results":[{"feedId":"feed/http://www.redjournal.org/inpress.rss"}]}')
             if url.startswith(fetch_rss.FEEDLY_STREAM):
+                if kw.get("params", {}).get("streamId") != "feed/http://www.redjournal.org/inpress.rss":
+                    return Resp(200, '{"items":[]}')       # Feedly knows the feed under the http:// id only
                 return Resp(200, '{"title":"Red Journal","items":[{"title":"A trial","published":1789400000000,'
                                  '"alternate":[{"href":"https://doi.org/10.1016/j.ijrobp.2026.1"}],'
                                  '"originId":"10.1016/j.ijrobp.2026.1","author":"Smith J",'
@@ -295,4 +299,4 @@ def test_fetch_feed_falls_back_to_browser_ua_then_feedly():
     assert e.title == "A trial" and e.link == "https://doi.org/10.1016/j.ijrobp.2026.1"
     assert fetch_rss._entry_doi(e) == "10.1016/j.ijrobp.2026.1"
     assert fetch_rss._entry_date(e) is not None and "Abstract text" in fetch_rss._entry_summary(e)
-    assert len(s.calls) == 3
+    assert len(s.calls) == 5   # direct, browser-ua, feedly search, https id (empty), http id
