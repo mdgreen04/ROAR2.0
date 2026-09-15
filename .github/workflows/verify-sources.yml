@@ -1,0 +1,28 @@
+# Manual check that every feed and PubMed query still works. Run it from the Actions tab.
+name: ROAR verify sources
+
+on:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Verify
+        env:
+          NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
+        run: |
+          python -m roar verify-sources --all | tee verify.txt
+          {
+            echo '## Source check'
+            echo '```'
+            cat verify.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

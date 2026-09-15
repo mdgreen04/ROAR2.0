@@ -1,0 +1,125 @@
+# ROAR 2.0 weekly fetch.
+#
+# Runs every Monday at 06:15 UTC (Sunday 22:15 Alaska daylight time / 21:15 standard time), collects the
+# week's candidates from RSS + PubMed, pre-scores them and commits digests/<date>/candidates.json plus the
+# updated state/seen.json back to the repo. The Cowork scheduled task (docs/COWORK_TASK.md) picks the file up
+# a few hours later, does the reading/summarising and emails the digest.
+#
+# If you add an ANTHROPIC_API_KEY secret (and SMTP secrets) the same workflow can do the whole job itself:
+# run it manually with backend=anthropic and send=true, or flip the defaults below.
+
+name: ROAR weekly fetch
+
+on:
+  schedule:
+    - cron: "15 6 * * 1"          # Mondays 06:15 UTC (GitHub delays runs at the top of the hour)
+  workflow_dispatch:
+    inputs:
+      week_of:
+        description: "Digest date YYYY-MM-DD (blank = this/next Monday)"
+        required: false
+        default: ""
+      backend:
+        description: "Analysis backend: file (default, Cowork does the analysis) | none | anthropic"
+        required: false
+        default: "file"
+      send:
+        description: "Send the email from this workflow via SMTP (needs ROAR_SMTP_* secrets)"
+        required: false
+        default: "false"
+      only_queries:
+        description: "Comma-separated PubMed query ids to run alone (testing), e.g. breast"
+        required: false
+        default: ""
+      no_state:
+        description: "true = do not read or update state/seen.json (testing)"
+        required: false
+        default: "false"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: roar-weekly
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      ROAR_SMTP_USER: ${{ secrets.ROAR_SMTP_USER }}
+      ROAR_SMTP_PASSWORD: ${{ secrets.ROAR_SMTP_PASSWORD }}
+      ROAR_FROM: ${{ secrets.ROAR_FROM }}
+      ROAR_TO: ${{ secrets.ROAR_TO }}
+      # NCBI asks for a contact address with every E-utilities call; the owner's GitHub noreply address
+      # keeps a personal email out of the public repo. Set the ROAR_NCBI_EMAIL secret to use a real one.
+      ROAR_NCBI_EMAIL: ${{ secrets.ROAR_NCBI_EMAIL || format('{0}@users.noreply.github.com', github.repository_owner) }}
+      WEEK_OF: ${{ github.event.inputs.week_of }}
+      BACKEND: ${{ github.event.inputs.backend || 'file' }}
+      SEND: ${{ github.event.inputs.send || 'false' }}
+      ONLY_QUERIES: ${{ github.event.inputs.only_queries }}
+      NO_STATE: ${{ github.event.inputs.no_state || 'false' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Tests (offline, fast)
+        run: python -m pytest -q
+
+      - name: Fetch candidates
+        run: |
+          ARGS=""
+          [ -n "$WEEK_OF" ] && ARGS="$ARGS --week-of $WEEK_OF"
+          [ -n "$ONLY_QUERIES" ] && ARGS="$ARGS --only-queries $ONLY_QUERIES"
+          [ "$NO_STATE" = "true" ] && ARGS="$ARGS --no-state"
+          # In the hybrid set-up the digest is rendered by the Cowork task and never committed here, so the
+          # "previous folder has no digest.html" carry-over heuristic would fire every week. Disable it.
+          [ "$BACKEND" = "file" ] && ARGS="$ARGS --no-carry-over"
+          echo "python -m roar fetch $ARGS"
+          python -m roar fetch $ARGS
+
+      - name: Analyse + render (only when a backend other than 'file' is requested)
+        if: env.BACKEND != 'file'
+        run: |
+          python -m roar analyze --backend "$BACKEND"
+          python -m roar render
+
+      - name: Send (SMTP)
+        if: env.BACKEND != 'file' && env.SEND == 'true'
+        run: python -m roar send --transport smtp
+
+      - name: Commit results
+        run: |
+          git config user.name "roar-bot"
+          git config user.email "roar-bot@users.noreply.github.com"
+          git add digests state
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+          else
+            git commit -m "ROAR: candidates for $(python -m roar latest | xargs basename)"
+            git push
+          fi
+
+      - name: Summary
+        run: |
+          WDIR=$(python -m roar latest)
+          echo "## ROAR fetch — $(basename "$WDIR")" >> "$GITHUB_STEP_SUMMARY"
+          python - <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import json, subprocess, pathlib
+          w = pathlib.Path(subprocess.check_output(["python", "-m", "roar", "latest"], text=True).strip())
+          r = json.loads((w / "fetch_report.json").read_text())
+          print(f"- fetched **{r.get('items_fetched')}** items, **{r.get('candidates')}** candidates, "
+                f"{r.get('already_seen')} already seen, {r.get('carried_over')} carried over")
+          bad = [f['id'] for f in r.get('feeds', []) if not f.get('ok')] + [q['id'] for q in r.get('queries', []) if not q.get('ok')]
+          print("- failed sources: " + (", ".join(bad) if bad else "none"))
+          EOF
