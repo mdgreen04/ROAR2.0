@@ -1,91 +1,90 @@
+{#- ROAR 2.0 email template.
+    Every style is inline and colours are repeated as bgcolor attributes: Gmail drops <style> blocks, so
+    nothing here may depend on a class. Layout uses tables for the parts that need boxes (header band,
+    editor's note, section bars, numbered badges); text runs in plain divs. -#}
+{%- set FONT = "font-family:Helvetica,Arial,sans-serif;" -%}
+{%- set NAVY = "#0f2440" -%}
+{%- set TAG = "font-size:11px;color:#1f4f6e;background-color:#e8f1f8;border-radius:10px;padding:2px 8px" -%}
+{%- set META = "font-size:12px;line-height:1.4;color:#66748a;margin-top:4px" -%}
+{%- set SUM = "margin-top:6px" -%}
+{%- set LK = "font-size:12px;margin-top:6px" -%}
+{%- macro section_bar(label, accent, tint, big=False) -%}
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:{{ '26px' if big else '22px' }}">
+<tr>
+<td width="6" bgcolor="{{ accent }}" style="width:6px;background-color:{{ accent }};font-size:0">&nbsp;</td>
+<td bgcolor="{{ tint }}" style="background-color:{{ tint }};padding:8px 14px;{{ FONT }}font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:{{ NAVY }}">{{ label }}</td>
+</tr>
+</table>
+{%- endmacro -%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ title }} — week of {{ week_label }}</title>
-<style>
-  body{margin:0;padding:0;background:#eef1f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1c2430;}
-  .wrap{max-width:660px;width:100%;background:#ffffff;border-radius:10px;overflow:hidden;}
-  .hd{background:#0f2440;padding:26px 30px 22px 30px;color:#ffffff;}
-  .hd .brand{font-size:30px;font-weight:800;letter-spacing:.5px;line-height:1.1;}
-  .hd .brand b{color:#f5a54a;}
-  .hd .sub{font-size:13px;color:#b8c4d6;margin-top:4px;}
-  .hd .wk{font-size:15px;margin-top:14px;font-weight:600;}
-  .hd .st{font-size:12px;color:#b8c4d6;margin-top:4px;}
-  .pad{padding:12px 30px 4px 30px;}
-  .note{background:#f4f7fb;border-left:4px solid #f5a54a;padding:12px 16px;font-size:14px;line-height:1.55;color:#2b3645;border-radius:0 6px 6px 0;margin:10px 0 0 0;}
-  .sec{font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:#0f2440;border-bottom:2px solid #d5dde8;padding:16px 0 6px 0;}
-  .sec.top{border-bottom-color:#f5a54a;}
-  .num{display:inline-block;width:26px;height:26px;border-radius:13px;background:#0f2440;color:#ffffff;font-size:13px;font-weight:700;text-align:center;line-height:26px;margin-right:8px;vertical-align:top;}
-  .h1{font-size:17px;font-weight:700;line-height:1.35;}
-  .h2{font-size:15px;font-weight:700;line-height:1.35;}
-  .h1 a,.h2 a,.cp a.t{color:#0f2440;text-decoration:none;}
-  .meta{font-size:12px;color:#66748a;margin-top:4px;}
-  .tag{display:inline-block;font-size:11px;color:#1f4f6e;background:#e8f1f8;border-radius:10px;padding:2px 8px;margin:6px 4px 0 0;}
-  .sum{font-size:14px;line-height:1.55;color:#2b3645;margin-top:6px;}
-  .why{font-size:13px;line-height:1.5;color:#2b3645;margin-top:6px;}
-  .why b{color:#b8641b;}
-  .so{color:#5c6b80;}
-  .lk{font-size:12px;margin-top:6px;}
-  .lk a{color:#1f6f8b;text-decoration:none;}
-  .cp{font-size:14px;line-height:1.5;color:#2b3645;margin-top:10px;}
-  .cp .m{color:#66748a;font-size:12px;}
-  .conf{font-size:13px;line-height:1.7;color:#2b3645;margin-top:8px;}
-  .conf a{color:#0f2440;font-weight:600;text-decoration:none;}
-  .ft{border-top:1px solid #e3e8ef;padding-top:14px;margin-top:20px;font-size:11px;line-height:1.6;color:#7a879a;}
-</style>
 </head>
-<body style="margin:0;padding:0;background:#eef1f5;">
-<span style="display:none;max-height:0;overflow:hidden;color:#eef1f5;">{{ preheader }}</span>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#eef1f5;"><tr><td align="center" style="padding:24px 12px;">
-<table role="presentation" width="660" cellpadding="0" cellspacing="0" border="0" class="wrap" style="max-width:660px;width:100%;background:#ffffff;">
-<tr><td class="hd" style="background:#0f2440;color:#ffffff;">
-<div class="brand"><b>ROAR</b> 2.0</div>
-<div class="sub">{{ subtitle }}</div>
-<div class="wk">Week of {{ week_label }}</div>
-<div class="st">{{ stats_line }}</div>
+<body style="margin:0;padding:0;background-color:#eef1f5;{{ FONT }}color:#1c2430;" bgcolor="#eef1f5">
+<span style="display:none;max-height:0;overflow:hidden;color:#eef1f5;font-size:1px;line-height:1px;">{{ preheader }}</span>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#eef1f5" style="background-color:#eef1f5;"><tr><td align="center" style="padding:24px 12px;">
+<table width="660" cellpadding="0" cellspacing="0" border="0" bgcolor="#fff" style="max-width:660px;width:100%;background-color:#fff;border-radius:10px;">
+<tr><td bgcolor="{{ NAVY }}" style="background-color:{{ NAVY }};color:#fff;padding:26px 30px 22px 30px;border-radius:10px 10px 0 0;{{ FONT }}">
+<div style="font-size:30px;font-weight:800;letter-spacing:.5px;line-height:1.1;color:#fff;"><span style="color:#f5a54a;">ROAR</span> 2.0</div>
+<div style="font-size:13px;color:#b8c4d6;margin-top:4px;">{{ subtitle }}</div>
+<div style="font-size:15px;color:#fff;margin-top:14px;font-weight:600;">Week of {{ week_label }}</div>
+<div style="font-size:12px;color:#b8c4d6;margin-top:4px;">{{ stats_line }}</div>
 </td></tr>
-<tr><td class="pad">
-{% if editor_note %}<div class="note"><b>Editor's note.</b> {{ editor_note }}</div>{% endif %}
+<tr><td style="padding:14px 30px 4px 30px;{{ FONT }}font-size:14px;line-height:1.55;color:#2b3645">
+{% if editor_note %}
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:8px;">
+<tr>
+<td width="5" bgcolor="#f5a54a" style="width:5px;background-color:#f5a54a;font-size:0;line-height:0;">&nbsp;</td>
+<td bgcolor="#fff7ec" style="background-color:#fff7ec;padding:12px 16px;{{ FONT }}font-size:14px;line-height:1.55;color:#2b3645;"><b style="color:{{ NAVY }};">Editor's note.</b> {{ editor_note }}</td>
+</tr>
+</table>
+{% endif %}
 {% if top_picks %}
-<div class="sec top">This week's top picks</div>
+{{ section_bar("This week's top picks", colors["top"][0], colors["top"][1], big=True) }}
 {% for p in top_picks %}
-<div style="margin-top:14px;">
-<div class="h1"><span class="num">{{ loop.index }}</span><a href="{{ p.article_url }}">{{ p.headline }}</a></div>
-<div class="meta">{{ p.meta }}</div>
-{% if p.tags %}<div>{% for t in p.tags %}<span class="tag">{{ t }}</span>{% endfor %}</div>{% endif %}
-<div class="sum">{{ p.summary }}</div>
-{% if p.why_it_matters %}<div class="why"><b>Why it matters:</b> {{ p.why_it_matters }}</div>{% endif %}
-<div class="lk">{{ p.links_html | safe }}</div>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:18px;">
+<tr>
+<td width="30" valign="top" style="width:30px;padding:2px 12px 0 0"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="28" height="28" align="center" bgcolor="{{ NAVY }}" style="width:28px;height:28px;background-color:{{ NAVY }};border-radius:14px;{{ FONT }}font-size:13px;font-weight:700;color:#fff;line-height:28px">{{ loop.index }}</td></tr></table></td>
+<td valign="top" style="{{ FONT }}font-size:19px;font-weight:700;line-height:1.3"><a href="{{ p.article_url }}" style="color:{{ NAVY }};text-decoration:none">{{ p.headline }}</a></td>
+</tr>
+</table>
+<div style="padding-left:42px">
+<div style="{{ META }}">{{ p.meta }}</div>
+{% if p.tags %}<div style="margin-top:7px;line-height:2">{% for t in p.tags %}<span style="{{ TAG }}">{{ t }}</span>{% if not loop.last %}&nbsp; {% endif %}{% endfor %}</div>{% endif %}
+<div style="{{ SUM }}">{{ p.summary }}</div>
+{% if p.why_it_matters %}<div style="font-size:13px;margin-top:6px"><b style="color:#b8641b">Why it matters:</b> {{ p.why_it_matters }}</div>{% endif %}
+<div style="{{ LK }}">{{ p.links_html | safe }}</div>
 </div>
 {% endfor %}
 {% endif %}
 {% for sec in sections %}
-<div class="sec">{{ sec.label }}</div>
+{{ section_bar(sec.label, sec.accent, sec.tint) }}
 {% for p in sec.entries %}
 {% if sec.compact %}
-<div class="cp"><a class="t" href="{{ p.article_url }}"><b>{{ p.headline }}</b></a> <span class="m">— {{ p.meta_short }}</span><br>{{ p.summary }} <span class="lk">{{ p.links_html | safe }}</span></div>
+<div style="margin-top:12px"><a href="{{ p.article_url }}" style="color:{{ NAVY }};text-decoration:none;font-weight:700;font-size:15px">{{ p.headline }}</a> <span style="color:#66748a;font-size:12px">— {{ p.meta_short }}</span><br>{{ p.summary }} <span style="font-size:12px">{{ p.links_html | safe }}</span></div>
 {% else %}
-<div style="margin-top:12px;">
-<div class="h2"><a href="{{ p.article_url }}">{{ p.headline }}</a></div>
-<div class="meta">{{ p.meta }}{% if p.tags %} · {{ p.tags | join(' · ') }}{% endif %}</div>
-<div class="sum">{{ p.summary }}{% if p.why_it_matters %} <span class="so">{{ p.why_it_matters }}</span>{% endif %}</div>
-<div class="lk">{{ p.links_html | safe }}</div>
+<div style="margin-top:16px">
+<div style="font-size:17px;font-weight:700;line-height:1.3"><a href="{{ p.article_url }}" style="color:{{ NAVY }};text-decoration:none">{{ p.headline }}</a></div>
+<div style="{{ META }}">{{ p.meta }}{% if p.tags %} · {{ p.tags | join(' · ') }}{% endif %}</div>
+<div style="{{ SUM }}">{{ p.summary }}{% if p.why_it_matters %} <span style="color:#5c6b80">{{ p.why_it_matters }}</span>{% endif %}</div>
+<div style="{{ LK }}">{{ p.links_html | safe }}</div>
 </div>
 {% endif %}
 {% endfor %}
 {% endfor %}
 {% if conferences %}
-<div class="sec">Coming up</div>
-<div class="conf">{% for c in conferences %}<a href="{{ c.url }}">{{ c.name }}</a> — {{ c.when }}, {{ c.location }}{% if c.days_away %} <span style="color:#66748a;">({{ c.days_away }})</span>{% endif %}<br>{% endfor %}</div>
+{{ section_bar("Coming up", colors["conferences"][0], colors["conferences"][1]) }}
+<div style="font-size:13px;line-height:1.8;margin-top:10px">{% for c in conferences %}<a href="{{ c.url }}" style="color:{{ NAVY }};font-weight:600;text-decoration:none;">{{ c.name }}</a> — {{ c.when }}, {{ c.location }}{% if c.days_away %} <span style="color:#66748a;">({{ c.days_away }})</span>{% endif %}<br>{% endfor %}</div>
 {% endif %}
-<div class="ft">
+<div style="border-top:1px solid #e3e8ef;padding-top:14px;margin-top:24px;font-size:11px;line-height:1.6;color:#7a879a;">
 {{ footer_line }}{% if skipped_summary %}<br>Not shown: {{ skipped_summary }}{% endif %}
 <br>Links: <b>Article</b> opens the publisher page, <b>PubMed</b> the abstract, <b>U-M</b> the full text through the University of Michigan library proxy (log in with your uniqname).
 <br>ROAR 2.0 is a personal open-source tool; sources and interests live in the repo's config/ folder.
 </div>
-<div style="height:20px;"></div>
+<div style="height:20px;line-height:20px;font-size:0;">&nbsp;</div>
 </td></tr>
 </table>
 </td></tr></table>
