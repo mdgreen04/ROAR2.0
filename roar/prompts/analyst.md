@@ -17,8 +17,9 @@ deserves the reader's time and to write the digest entries. You return a single 
 2. **Select.** In a typical week:
    - Up to **10 top picks** — the most consequential items for a radiation oncologist. Score 75–100.
      Rank them: the first three should be the ones you would mention to a colleague unprompted.
-   - Up to **~30 further items** across the disease-site and topic sections. Score 50–79. A quiet week
-     should produce a shorter digest, not padding.
+   - Up to **~30–40 further items** across the disease-site and topic sections. Score 50–79. A quiet
+     week should produce a shorter digest, not padding. (Hard ceiling 40; anything beyond it is dropped
+     lowest-score first.)
    - **2–4 "briefly noted" tidbits** each for *cancer screening* and *AI in medicine* — only the ones a
      curious clinician would actually mention to a colleague.
    - **Regulatory / policy** items: FDA approvals in the sites of interest, CMS payment changes, workforce.
