@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import html
+import logging
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
@@ -10,6 +11,8 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from . import __version__
 from .models import Item
 from .util import ROOT, parse_date
+
+log = logging.getLogger("roar.render")
 
 SECTION_LABELS = {
     "radonc": "Radiation oncology — practice, technique & physics",
@@ -29,6 +32,28 @@ SECTION_LABELS = {
     "ai": "Briefly noted — AI in medicine",
 }
 COMPACT_SECTIONS = {"screening", "ai"}
+# Section colour accents (left bar + light tint) for the HTML digest. Everything is inlined in the template
+# because Gmail drops <style> blocks, so these are plain hex values rather than CSS classes.
+SECTION_COLORS = {
+    "top":         ("#f5a54a", "#fff3e2"),
+    "radonc":      ("#0f2440", "#e6edf7"),
+    "gu":          ("#1f7f78", "#e3f2f0"),
+    "gi":          ("#3b8a3e", "#e8f4e6"),
+    "hn":          ("#6b4fbb", "#eeeaf8"),
+    "cutaneous":   ("#c4552d", "#fdeae4"),
+    "heme":        ("#b8325a", "#fbe7ed"),
+    "gyn":         ("#a33c8f", "#f7e6f2"),
+    "breast":      ("#d1477f", "#fdecf2"),
+    "thoracic":    ("#2f6db5", "#e6effb"),
+    "cns":         ("#4b56b8", "#ebedfa"),
+    "other_sites": ("#5c6b80", "#edf0f4"),
+    "systemic":    ("#3d4a5c", "#eef0f3"),
+    "policy":      ("#8a6d2f", "#f5f0e4"),
+    "screening":   ("#2a7f9e", "#e6f2f7"),
+    "ai":          ("#3467a8", "#e8f0f9"),
+    "conferences": ("#0f2440", "#eef1f5"),
+}
+LINK_STYLE = "color:#1f6f8b;text-decoration:none"
 
 
 def _fmt_date(d: date | None, with_year: bool = True) -> str:
@@ -66,13 +91,13 @@ def _pick_context(p: dict, item: Item, cfg: dict) -> dict:
     meta_short = f"{journal}, {_fmt_date(d, with_year=False)}" if journal else _fmt_date(d)
     parts_html, parts_md = [], []
     if article_url:
-        parts_html.append(f'<a href="{html.escape(article_url)}">Article ↗</a>')
+        parts_html.append(f'<a href="{html.escape(article_url)}" style="{LINK_STYLE}">Article ↗</a>')
         parts_md.append(f"[Article]({article_url})")
     if pubmed_url:
-        parts_html.append(f'<a href="{html.escape(pubmed_url)}">PubMed</a>')
+        parts_html.append(f'<a href="{html.escape(pubmed_url)}" style="{LINK_STYLE}">PubMed</a>')
         parts_md.append(f"[PubMed]({pubmed_url})")
     if proxy_url:
-        parts_html.append(f'<a href="{html.escape(proxy_url)}">U-M full text</a>')
+        parts_html.append(f'<a href="{html.escape(proxy_url)}" style="{LINK_STYLE}">U-M full text</a>')
         parts_md.append(f"[U-M full text]({proxy_url})")
     return {
         **p,
@@ -129,8 +154,9 @@ def build_context(analysis: dict, candidates: list[Item], cfg: dict, fetch_meta:
     for key in order:
         items = [p for p in rest if p["section"] == key]
         if items:
+            accent, tint = SECTION_COLORS.get(key, SECTION_COLORS["other_sites"])
             sections.append({"key": key, "label": SECTION_LABELS.get(key, key), "entries": items,
-                             "compact": key in COMPACT_SECTIONS})
+                             "compact": key in COMPACT_SECTIONS, "accent": accent, "tint": tint})
 
     fetch_meta = fetch_meta or {}
     n_screened = fetch_meta.get("items_fetched") or fetch_meta.get("candidates") or len(candidates)
@@ -157,6 +183,7 @@ def build_context(analysis: dict, candidates: list[Item], cfg: dict, fetch_meta:
         "footer_line": f"Generated {generated} by ROAR {__version__} · candidates {week_of}",
         "preheader": preheader,
         "n_selected": len(ctx_picks),
+        "colors": SECTION_COLORS,
     }
 
 
@@ -164,6 +191,12 @@ def render_all(ctx: dict) -> dict[str, str]:
     env = Environment(loader=FileSystemLoader(str(ROOT / "roar" / "templates")),
                       autoescape=select_autoescape(["html", "j2"]), trim_blocks=False, lstrip_blocks=False)
     html_out = env.get_template("digest.html.j2").render(**ctx)
+    # Gmail shows "[Message clipped]" above ~102 KB, so the HTML is emitted without indentation and the
+    # digest shape (settings.yaml) is sized to stay well below that. Warn if a week still overshoots.
+    html_out = "\n".join(line.strip() for line in html_out.splitlines() if line.strip()) + "\n"
+    size_kb = len(html_out.encode("utf-8")) / 1024
+    if size_kb > 95:
+        log.warning("digest.html is %.0f KB — Gmail clips above ~102 KB; lower digest_shape.max_items", size_kb)
     env_md = Environment(loader=FileSystemLoader(str(ROOT / "roar" / "templates")), autoescape=False)
     md_out = env_md.get_template("digest.md.j2").render(**ctx)
     return {"html": html_out, "md": md_out, "txt": md_out}
