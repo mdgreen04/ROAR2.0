@@ -28,7 +28,8 @@ candidates:
 digest_shape:
   top_picks: 10           # "This week's top picks" (score >= top_pick_min_score)
   top_pick_min_score: 75
-  max_items: 40           # everything else combined
+  max_items: 40           # everything else combined. Gmail shows "[Message clipped]" above ~102 KB, which a full
+                          # 10 + 40 week can exceed; the reader chose volume over the occasional clip (2026-09-16).
   tidbits_per_section: 4  # ceilings for the "briefly noted" sections (screening, ai)
   section_order:
     - top
