@@ -55,7 +55,7 @@ Work autonomously; do not ask questions. Everything you need is in the public re
 
 5. Email it with the Gmail send tool: to michaelgreen04@gmail.com, subject = contents of
    <folder>/subject.txt, htmlBody = the complete contents of <folder>/digest.html copied exactly (it is
-   40–60 KB; read it in full first and do not paraphrase, shorten or reformat it), body = contents of
+   60–95 KB of inline-styled HTML; read it in full first and do not paraphrase, shorten or reformat it), body = contents of
    <folder>/digest.txt. Send exactly one email. If the send fails for a permissions/scope reason, save
    digest.html to /mnt/user-data/outputs/ and finish with a report that says the Gmail connector needs
    send permission.
