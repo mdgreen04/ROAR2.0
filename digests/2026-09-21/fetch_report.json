@@ -1,0 +1,406 @@
+{
+  "week_of": "2026-09-21",
+  "feeds": [
+    {
+      "id": "redjournal_inpress",
+      "ok": true,
+      "entries": 40,
+      "kept": 2,
+      "via": "feedly"
+    },
+    {
+      "id": "redjournal_current",
+      "ok": true,
+      "entries": 40,
+      "kept": 2,
+      "via": "feedly"
+    },
+    {
+      "id": "pro_inpress",
+      "ok": true,
+      "entries": 40,
+      "kept": 15,
+      "via": "feedly"
+    },
+    {
+      "id": "pro_current",
+      "ok": true,
+      "entries": 40,
+      "kept": 14,
+      "via": "feedly"
+    },
+    {
+      "id": "greenjournal_inpress",
+      "ok": true,
+      "entries": 40,
+      "kept": 9,
+      "via": "feedly"
+    },
+    {
+      "id": "advances_radonc",
+      "ok": true,
+      "entries": 40,
+      "kept": 9,
+      "via": "feedly"
+    },
+    {
+      "id": "clinical_oncology_rcr",
+      "ok": true,
+      "entries": 40,
+      "kept": 3,
+      "via": "feedly"
+    },
+    {
+      "id": "brachytherapy",
+      "ok": true,
+      "entries": 40,
+      "kept": 2,
+      "via": "feedly"
+    },
+    {
+      "id": "semin_radonc",
+      "ok": true,
+      "entries": 27,
+      "kept": 27,
+      "via": "direct"
+    },
+    {
+      "id": "ctro",
+      "ok": true,
+      "entries": 46,
+      "kept": 46,
+      "via": "direct"
+    },
+    {
+      "id": "phiro",
+      "ok": true,
+      "entries": 22,
+      "kept": 22,
+      "via": "direct"
+    },
+    {
+      "id": "med_phys",
+      "ok": true,
+      "entries": 40,
+      "kept": 15,
+      "via": "feedly"
+    },
+    {
+      "id": "jco",
+      "ok": true,
+      "entries": 121,
+      "kept": 121,
+      "via": "direct"
+    },
+    {
+      "id": "jco_op",
+      "ok": true,
+      "entries": 293,
+      "kept": 264,
+      "via": "direct"
+    },
+    {
+      "id": "lancet_oncology",
+      "ok": true,
+      "entries": 40,
+      "kept": 6,
+      "via": "feedly"
+    },
+    {
+      "id": "nejm",
+      "ok": true,
+      "entries": 40,
+      "kept": 6,
+      "via": "feedly"
+    },
+    {
+      "id": "jama_oncology",
+      "ok": true,
+      "entries": 11,
+      "kept": 7,
+      "via": "direct"
+    },
+    {
+      "id": "jama",
+      "ok": true,
+      "entries": 16,
+      "kept": 1,
+      "via": "direct"
+    },
+    {
+      "id": "annals_oncology",
+      "ok": true,
+      "entries": 40,
+      "kept": 3,
+      "via": "feedly"
+    },
+    {
+      "id": "jnci_advance",
+      "ok": true,
+      "entries": 2,
+      "kept": 2,
+      "via": "direct"
+    },
+    {
+      "id": "cancer_acs",
+      "ok": true,
+      "entries": 40,
+      "kept": 13,
+      "via": "feedly"
+    },
+    {
+      "id": "ca_cancer_j_clin",
+      "ok": true,
+      "entries": 40,
+      "kept": 1,
+      "via": "feedly"
+    },
+    {
+      "id": "nat_rev_clin_oncol",
+      "ok": true,
+      "entries": 8,
+      "kept": 3,
+      "via": "direct"
+    },
+    {
+      "id": "nature_medicine",
+      "ok": true,
+      "entries": 8,
+      "kept": 3,
+      "via": "direct"
+    },
+    {
+      "id": "nature_cancer",
+      "ok": true,
+      "entries": 8,
+      "kept": 5,
+      "via": "direct"
+    },
+    {
+      "id": "bjc",
+      "ok": true,
+      "entries": 8,
+      "kept": 8,
+      "via": "direct"
+    },
+    {
+      "id": "ejc_inpress",
+      "ok": true,
+      "entries": 40,
+      "kept": 5,
+      "via": "feedly"
+    },
+    {
+      "id": "esmo_open",
+      "ok": true,
+      "entries": 40,
+      "kept": 40,
+      "via": "direct"
+    },
+    {
+      "id": "lancet",
+      "ok": true,
+      "entries": 40,
+      "kept": 1,
+      "via": "feedly"
+    },
+    {
+      "id": "eur_urol_inpress",
+      "ok": true,
+      "entries": 40,
+      "kept": 4,
+      "via": "feedly"
+    },
+    {
+      "id": "head_neck",
+      "ok": true,
+      "entries": 40,
+      "kept": 9,
+      "via": "feedly"
+    },
+    {
+      "id": "oral_oncology",
+      "ok": true,
+      "entries": 52,
+      "kept": 52,
+      "via": "direct"
+    },
+    {
+      "id": "jto",
+      "ok": true,
+      "entries": 40,
+      "kept": 4,
+      "via": "feedly"
+    },
+    {
+      "id": "lancet_haematology",
+      "ok": true,
+      "entries": 40,
+      "kept": 2,
+      "via": "feedly"
+    },
+    {
+      "id": "neuro_oncology",
+      "ok": true,
+      "entries": 3,
+      "kept": 3,
+      "via": "direct"
+    },
+    {
+      "id": "gyn_onc",
+      "ok": true,
+      "entries": 40,
+      "kept": 0,
+      "via": "feedly"
+    },
+    {
+      "id": "the_breast",
+      "ok": true,
+      "entries": 40,
+      "kept": 2,
+      "via": "feedly"
+    },
+    {
+      "id": "npj_breast_cancer",
+      "ok": true,
+      "entries": 8,
+      "kept": 2,
+      "via": "direct"
+    },
+    {
+      "id": "clinical_breast_cancer",
+      "ok": true,
+      "entries": 40,
+      "kept": 3,
+      "via": "feedly"
+    },
+    {
+      "id": "breast_cancer_res_treat",
+      "ok": true,
+      "entries": 20,
+      "kept": 7,
+      "via": "direct"
+    },
+    {
+      "id": "j_breast_imaging",
+      "ok": true,
+      "entries": 6,
+      "kept": 4,
+      "via": "direct"
+    },
+    {
+      "id": "lancet_digital_health",
+      "ok": true,
+      "entries": 40,
+      "kept": 1,
+      "via": "feedly"
+    },
+    {
+      "id": "npj_digital_medicine",
+      "ok": true,
+      "entries": 8,
+      "kept": 3,
+      "via": "direct"
+    },
+    {
+      "id": "medrxiv_oncology",
+      "ok": true,
+      "entries": 30,
+      "kept": 12,
+      "via": "direct"
+    },
+    {
+      "id": "asco_post",
+      "ok": true,
+      "entries": 7745,
+      "kept": 35,
+      "via": "direct"
+    },
+    {
+      "id": "onclive",
+      "ok": true,
+      "entries": 40,
+      "kept": 0,
+      "via": "feedly"
+    },
+    {
+      "id": "healio_hemonc",
+      "ok": true,
+      "entries": 20,
+      "kept": 15,
+      "via": "direct"
+    },
+    {
+      "id": "nci_cancer_currents",
+      "ok": true,
+      "entries": 10,
+      "kept": 1,
+      "via": "direct"
+    },
+    {
+      "id": "nci_news_releases",
+      "ok": true,
+      "entries": 10,
+      "kept": 0,
+      "via": "direct"
+    },
+    {
+      "id": "fda_press",
+      "ok": true,
+      "entries": 20,
+      "kept": 0,
+      "via": "direct"
+    },
+    {
+      "id": "cancer_letter",
+      "ok": true,
+      "entries": 10,
+      "kept": 10,
+      "via": "direct"
+    },
+    {
+      "id": "radiation_economics",
+      "ok": false,
+      "error": "HTTP 403; browser-ua HTTP 403; feedly: no items",
+      "entries": 0,
+      "kept": 0
+    }
+  ],
+  "queries": [
+    {
+      "id": "rt_all",
+      "ok": true,
+      "count": 150
+    },
+    {
+      "id": "radonc_journals",
+      "ok": true,
+      "count": 135
+    },
+    {
+      "id": "top_journals_onc",
+      "ok": true,
+      "count": 78
+    },
+    {
+      "id": "ai_medicine",
+      "ok": true,
+      "count": 32
+    },
+    {
+      "id": "screening",
+      "ok": true,
+      "count": 6
+    },
+    {
+      "id": "breast",
+      "ok": true,
+      "count": 19
+    }
+  ],
+  "items_fetched": 1178,
+  "already_seen": 62,
+  "carried_over": 0,
+  "candidates": 160,
+  "sources_ok": 57
+}
