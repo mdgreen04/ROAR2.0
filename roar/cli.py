@@ -67,6 +67,9 @@ def cmd_fetch(args, cfg: dict) -> int:
     wdir.mkdir(parents=True, exist_ok=True)
     report: dict = {"week_of": week_of, "feeds": [], "queries": []}
     items: list[Item] = []
+    session = None
+    client = None
+    today = date.today()
 
     if args.from_items:
         for f in args.from_items:
@@ -94,12 +97,44 @@ def cmd_fetch(args, cfg: dict) -> int:
 
     report["items_fetched"] = len(items)
     merged = merge_items(items)
-    scored = prescore_all(merged, cfg["interests"])
 
-    # state: never show something twice
+    # state: never show something twice (filter before the network look-ups so they are not wasted)
     state = SeenState(ROOT / settings["digest"]["state_file"], int(settings["digest"]["seen_ttl_days"]))
-    unseen, n_seen = state.filter_unseen(scored) if not args.no_state else (scored, 0)
+    unseen, n_seen = state.filter_unseen(merged) if not args.no_state else (merged, 0)
     report["already_seen"] = n_seen
+
+    # enrichment: abstracts (and dates/DOIs/PMIDs) for journal items that arrived as a citation line.
+    # Must run before pre-scoring, which keys on title + abstract text. The network look-ups are skipped
+    # offline (--from-items); the deferral below still applies whenever the seen-state is in use.
+    e_cfg = settings.get("enrich") or {}
+    enrich_on = bool(e_cfg.get("enabled", True)) and not getattr(args, "no_enrich", False)
+    if enrich_on and session is not None:
+        from .enrich import enrich_items
+        report["enrich"] = enrich_items(unseen, cfg, session, pubmed_client=client)
+
+    scored = prescore_all(unseen, cfg["interests"])
+
+    # deferral: hold back journal items that are still citation-only so that next week's PubMed record can
+    # claim them (they stay unseen); after `defer_days` they are shown as they are.
+    deferred: list[Item] = []
+    defer_days = int(e_cfg.get("defer_days", 0) or 0) if enrich_on else 0
+    if defer_days and not args.no_state:
+        from .enrich import is_citation_only, is_eligible
+        min_chars = int(e_cfg.get("min_abstract_chars", 160))
+        cats = set(e_cfg.get("categories") or [])
+        kept_items: list[Item] = []
+        for it in scored:
+            if is_eligible(it, cats) and is_citation_only(it.abstract, min_chars):
+                age = state.pending_age(it, today)
+                if age is None or age < defer_days:
+                    deferred.append(it)
+                    continue
+                it.score_reasons.append("no-abstract:shown-after-deferral")
+            kept_items.append(it)
+        scored = kept_items
+        log.info("deferred %d citation-only items (waiting up to %d days for an abstract)", len(deferred), defer_days)
+    report["deferred"] = len(deferred)
+    unseen = scored
 
     # carry over last week's candidates if that digest was never rendered (analyst did not run)
     carried = 0
@@ -143,7 +178,8 @@ def cmd_fetch(args, cfg: dict) -> int:
     (wdir / "candidates.md").write_text(candidates_markdown(selected, report), encoding="utf-8")
     write_json(wdir / "fetch_report.json", report)
     if not args.no_state:
-        state.mark(selected, when=date.today())
+        state.mark(selected, when=today)
+        state.defer(deferred, when=today)
         state.save()
     log.info("fetched %d -> merged %d -> unseen %d -> candidates %d (written to %s)",
              len(items), len(merged), len(unseen), len(selected), wdir)
@@ -293,6 +329,9 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--no-carry-over", action="store_true",
                     help="do not carry over last week's candidates when its folder has no digest.html "
                          "(use when the digest is rendered elsewhere, e.g. the Cowork task, and never committed)")
+    sp.add_argument("--no-enrich", action="store_true",
+                    help="skip the Crossref/PubMed/Semantic Scholar abstract look-ups and the deferral of "
+                         "citation-only items (settings.yaml `enrich`)")
     sp.set_defaults(func=cmd_fetch)
 
     sp = sub.add_parser("analyze", help="rank + summarise candidates")
@@ -319,6 +358,7 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--only-feeds", default=None)
     sp.add_argument("--only-queries", default=None)
     sp.add_argument("--no-carry-over", action="store_true")
+    sp.add_argument("--no-enrich", action="store_true")
     sp.add_argument("--backend", choices=["file", "anthropic", "none"], default=None)
     sp.add_argument("--transport", choices=["smtp", "file", "none"], default=None)
     sp.add_argument("--to", default=None)

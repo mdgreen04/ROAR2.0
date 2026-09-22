@@ -65,12 +65,19 @@ class PubMedClient:
         return r
 
     # -- stage 1 -------------------------------------------------------------
-    def esearch(self, term: str, reldate: int, retmax: int) -> list[str]:
-        # POST: the expanded queries are ~3 KB, beyond what E-utilities accept reliably on a GET URL
-        r = self._post("esearch.fcgi", db="pubmed", term=term, reldate=reldate, datetype="edat",
-                       retmode="json", retmax=retmax, sort="date")
+    def esearch(self, term: str, reldate: int | None, retmax: int) -> list[str]:
+        # POST: the expanded queries are ~3 KB, beyond what E-utilities accept reliably on a GET URL.
+        # reldate=None searches without a date window (used for DOI look-ups by the enrichment step).
+        params = dict(db="pubmed", term=term, retmode="json", retmax=retmax, sort="date")
+        if reldate is not None:
+            params.update(reldate=reldate, datetype="edat")
+        r = self._post("esearch.fcgi", **params)
         data = r.json()
         return list(data.get("esearchresult", {}).get("idlist", []))
+
+    def pmids_for_doi(self, doi: str) -> list[str]:
+        """PMIDs whose article identifier is this DOI (normally 0 or 1)."""
+        return self.esearch(f"{doi}[AID]", reldate=None, retmax=3)
 
     def esummary(self, pmids: list[str]) -> dict:
         out: dict = {}

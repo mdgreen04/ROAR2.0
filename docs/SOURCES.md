@@ -5,12 +5,13 @@ ROAR 2.0 reads two kinds of source every week. Both are plain YAML you can edit.
 ## PubMed queries — `config/pubmed.yaml`
 
 PubMed is the backbone for journal literature: it covers every journal, returns abstracts and publication
-types, and is free to query (E-utilities). Six queries run over the past 8 days (`datetype=edat`, the date
+types, and is free to query (E-utilities). Seven queries run over the past 8 days (`datetype=edat`, the date
 the record entered PubMed, so nothing waits for MeSH indexing):
 
 | id | what it catches |
 |---|---|
 | `rt_all` | any paper whose title/abstract mentions radiotherapy-type terms **and** a clinical design word (randomised, phase 2/3, guideline, meta-analysis, PROs, toxicity, cost…) |
+| `jco_all` | everything in JCO and JCO Oncology Practice (added 2026-09-22: PubMed has their online-first papers with abstracts the same day; the publisher feeds are citation-only, undated and months late, so they are disabled) |
 | `radonc_journals` | everything in the radiation oncology journals (Red Journal, Green Journal, PRO, Advances, ctRO, Seminars, Clinical Oncology, Brachytherapy, Radiation Oncology, Strahlentherapie, phiRO, Med Phys, JACMP, PMB…) |
 | `top_journals_onc` | oncology papers in NEJM, Lancet, JAMA, Lancet Oncol, JCO, JAMA Oncol, Annals, Nature Medicine, JNCI, Cancer, CA, NRCO, EJC, JAMA Netw Open, BMJ, Blood, Lancet Haem, JTO, Eur Urol, Gyn Onc, IJGC, Head & Neck, Oral Oncol, JAMA Derm, JAAD, Neuro-Onc, CCR, ESMO Open, JCO OP, GI/hepatology/surgery journals… with a trial/guideline/RT/screening word |
 | `ai_medicine` | AI / LLM papers restricted to high-impact general, oncology, radiology and radonc journals |
@@ -49,7 +50,7 @@ so a feed that fails outright costs at most a few days of lead time on "in press
 | Physics & Imaging in Radiation Oncology | 3 | ~4 | |
 | Medical Physics | 3 | ~8 | |
 | JACMP | 3 | ~11 | disabled by default (mostly QA) |
-| JCO / JCO Oncology Practice | 1 / 2 | ~8 / ~5 | |
+| JCO / JCO Oncology Practice | 1 / 2 | ~8 / ~5 | disabled 2026-09-22 — replaced by the `jco_all` PubMed query (feeds carry no abstract or date) |
 | Lancet Oncology online first | 1 | ~3 | |
 | NEJM | 1 | ~19 | topic-filtered |
 | JAMA Oncology online first / JAMA online first | 1 | ~6 / ~34 | JAMA topic-filtered |

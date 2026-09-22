@@ -57,6 +57,8 @@ jobs:
       # NCBI asks for a contact address with every E-utilities call; the owner's GitHub noreply address
       # keeps a personal email out of the public repo. Set the ROAR_NCBI_EMAIL secret to use a real one.
       ROAR_NCBI_EMAIL: ${{ secrets.ROAR_NCBI_EMAIL || format('{0}@users.noreply.github.com', github.repository_owner) }}
+      # Optional: a free Semantic Scholar key steadies the last-resort abstract look-ups (settings.yaml `enrich`).
+      S2_API_KEY: ${{ secrets.S2_API_KEY }}
       WEEK_OF: ${{ github.event.inputs.week_of }}
       BACKEND: ${{ github.event.inputs.backend || 'file' }}
       SEND: ${{ github.event.inputs.send || 'false' }}
@@ -119,7 +121,14 @@ jobs:
           w = pathlib.Path(subprocess.check_output(["python", "-m", "roar", "latest"], text=True).strip())
           r = json.loads((w / "fetch_report.json").read_text())
           print(f"- fetched **{r.get('items_fetched')}** items, **{r.get('candidates')}** candidates, "
-                f"{r.get('already_seen')} already seen, {r.get('carried_over')} carried over")
+                f"{r.get('already_seen')} already seen, {r.get('carried_over')} carried over, "
+                f"{r.get('deferred', 0)} deferred (no abstract yet)")
+          e = r.get("enrich") or {}
+          if e:
+              print(f"- enrichment: {e.get('candidates', 0)} citation-only items, {e.get('filled', 0)} filled "
+                    f"(Crossref {e.get('crossref', 0)}, PubMed {e.get('pubmed_pmid', 0) + e.get('pubmed_doi', 0)}, "
+                    f"Semantic Scholar {e.get('semantic_scholar', 0)}), {e.get('still_missing', 0)} still missing, "
+                    f"{e.get('lookups', 0)} look-ups in {e.get('seconds', 0)}s")
           bad = [f['id'] for f in r.get('feeds', []) if not f.get('ok')] + [q['id'] for q in r.get('queries', []) if not q.get('ok')]
           print("- failed sources: " + (", ".join(bad) if bad else "none"))
           EOF

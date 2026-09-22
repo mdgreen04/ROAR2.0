@@ -10,4 +10,4 @@ A small, dependency-light pipeline:
 See README.md for the weekly flow.
 """
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"

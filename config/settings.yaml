@@ -24,6 +24,23 @@ candidates:
   min_prescore: 1         # items scoring below this are dropped before analysis
   abstract_chars: 2600    # abstracts are trimmed to this length for the analyst (results/conclusions sit at the end)
 
+# Abstract enrichment. Publisher feeds often deliver a citation line instead of an abstract (Atypon "etoc"
+# feeds: "Journal of Clinical Oncology, Ahead of Print."; Elsevier "in press" feeds: "Publication date: …
+# Author(s): …"). After merging, items from journal-type sources that still lack an abstract are looked up
+# by DOI in Crossref (ASCO, Wiley, Springer, JAMA, NEJM and most societies deposit abstracts there; Elsevier
+# does not), then in PubMed by DOI, then in Semantic Scholar. Items with no DOI are matched by exact title
+# in Crossref first. Whatever is still citation-only afterwards is held back (kept unseen) for
+# `defer_days` so that the PubMed record can claim it the following week, and only then shown as-is.
+enrich:
+  enabled: true
+  min_abstract_chars: 160      # shorter than this, or matching a known citation pattern, = "no abstract"
+  categories: [radonc_journal, oncology_journal, site_journal, ai_journal, preprint]
+  max_lookups: 250             # per run, across all sources; tier-1 items and items with a DOI go first
+  time_budget_s: 300           # (each item costs 1–5 requests; ~0.3 s each)
+  crossref_mailto: ""          # polite-pool contact for Crossref; ROAR_CROSSREF_MAILTO or the NCBI email is used if blank
+  semantic_scholar: true       # last-resort lookup; set S2_API_KEY for a steadier rate limit
+  defer_days: 14
+
 # Final digest shape. The analyst decides what is interesting; these are ceilings.
 digest_shape:
   top_picks: 10           # "This week's top picks" (score >= top_pick_min_score)
@@ -78,4 +95,5 @@ pubmed:
   email: "roar2@example.com"
   retmax_per_query: 400
   # Stage 2 (abstracts) is only fetched for the top N items after pre-scoring on titles/journals.
-  abstracts_for_top: 220
+  # (Records below the cut that survive into the candidate list are fetched later by the enrichment step.)
+  abstracts_for_top: 280
