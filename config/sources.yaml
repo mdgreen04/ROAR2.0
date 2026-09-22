@@ -80,16 +80,23 @@ feeds:
     enabled: false   # high volume, mostly QA/technical; PubMed query catches the clinically relevant ones
 
   # ---------------------------------------------------------------- General oncology & medicine
+  # The ascopubs.org "etoc" feeds carry no abstract and no date ("Journal of Clinical Oncology, Ahead of
+  # Print.") and list papers one to five months after online publication (checked against Crossref on
+  # 2026-09-22). PubMed indexes JCO / JCO OP online-first papers the same day with abstracts, so the
+  # `jco_all` query in pubmed.yaml is the source for these journals. Re-enable if PubMed misses something;
+  # the enrichment step (settings.yaml `enrich`) fills abstracts from Crossref for citation-only items.
   - id: jco
     name: "Journal of Clinical Oncology"
     url: "https://ascopubs.org/action/showFeed?type=etoc&feed=rss&jc=jco"
     tier: 1
     category: oncology_journal
+    enabled: false
   - id: jco_op
     name: "JCO Oncology Practice"
     url: "https://ascopubs.org/action/showFeed?type=etoc&feed=rss&jc=op"
     tier: 2
     category: oncology_journal
+    enabled: false
   - id: lancet_oncology
     name: "The Lancet Oncology — online first"
     url: "https://www.thelancet.com/rssfeed/lanonc_online.xml"

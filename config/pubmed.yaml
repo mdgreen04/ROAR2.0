@@ -84,6 +84,16 @@ queries:
     topic: radonc
     term: "{radonc_journals} {exclusions}"
 
+  - id: jco_all
+    # JCO and JCO OP publish online-first papers that reach PubMed (with abstracts and publication types)
+    # the same day. Their publisher RSS feeds carry only a citation line and no date and list papers
+    # months after online publication, so PubMed is the primary source for these two journals and the
+    # feeds are disabled in sources.yaml. No topic terms: the pre-scorer decides relevance.
+    name: "Journal of Clinical Oncology and JCO Oncology Practice — everything"
+    tier: 1
+    topic: oncology
+    term: '("J Clin Oncol"[jour] OR "JCO Oncol Pract"[jour]) {exclusions}'
+
   - id: top_journals_onc
     name: "Oncology in top general and disease-site journals"
     tier: 1

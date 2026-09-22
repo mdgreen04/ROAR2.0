@@ -1,7 +1,7 @@
 # ROAR 2.0 — Radiation Oncology Aggregator Resource
 
 A weekly, emailed literature digest for one radiation oncologist. It replaces a $144/year Feedly
-subscription that surfaced <10 % relevant articles with a free pipeline that reads ~45 feeds and six
+subscription that surfaced <10 % relevant articles with a free pipeline that reads ~45 feeds and seven
 PubMed queries, pre-filters ~500–800 items a week down to ~150 candidates, hands them to an analyst
 (Claude) that picks the 10 most consequential plus ~30 more worth knowing, and emails an HTML digest every Monday morning
 with links to the article, PubMed and the University of Michigan full-text proxy.
@@ -10,7 +10,7 @@ with links to the article, PubMed and the University of Michigan full-text proxy
                  GitHub Actions (Sunday night)                 Cowork scheduled task (Monday 06:00 AKT)
  ┌──────────────────────────────────────────────┐    ┌───────────────────────────────────────────────┐
  │ RSS feeds ──┐                                │    │ git clone → read candidates + analyst prompt  │
- │             ├─ merge/dedupe ─ pre-score ─►   │    │ Claude ranks + writes summaries → analysis.json│
+ │             ├─ merge ─ enrich ─ pre-score ─► │    │ Claude ranks + writes summaries → analysis.json│
  │ PubMed ─────┘   seen-state    candidates.json│───►│ roar render → digest.html → Gmail send        │
  │            commit to repo                    │    │ (optional) commit digest back                  │
  └──────────────────────────────────────────────┘    └───────────────────────────────────────────────┘
@@ -23,14 +23,14 @@ with links to the article, PubMed and the University of Michigan full-text proxy
 |---|---|
 | `config/settings.yaml` | recipient, lookback window, caps, section order, U-M proxy prefix, backends |
 | `config/sources.yaml` | RSS/Atom feeds with tier, category, topic filter, enabled flag |
-| `config/pubmed.yaml` | the six PubMed queries, built from shared fragments |
+| `config/pubmed.yaml` | the seven PubMed queries, built from shared fragments |
 | `config/interests.yaml` | **the reader profile** (embedded in the analyst prompt) + keyword scoring rules + disease-site terms |
 | `config/conferences.yaml` | upcoming meetings for the "Coming up" footer |
-| `roar/` | the pipeline (`fetch_rss`, `fetch_pubmed`, `normalize`, `prescore`, `state`, `analyze`, `render`, `send`, `cli`) |
+| `roar/` | the pipeline (`fetch_rss`, `fetch_pubmed`, `normalize`, `enrich`, `prescore`, `state`, `analyze`, `render`, `send`, `cli`) |
 | `roar/prompts/analyst.md` | analyst instructions (what to pick, how to write), shared by every backend |
 | `roar/templates/` | Gmail-safe HTML email + Markdown templates |
 | `digests/YYYY-MM-DD/` | one folder per digest: `candidates.json/.md`, `analyst_input.md`, `analyst_prompt.md`, `analysis.json`, `digest.html/.md/.txt`, `subject.txt`, `fetch_report.json` |
-| `state/seen.json` | ids already shown (120-day memory) so nothing appears twice |
+| `state/seen.json` | ids already shown (120-day memory) so nothing appears twice, plus the `pending` register of items held back until an abstract turns up |
 | `.github/workflows/` | `weekly.yml` (fetch + commit every Monday 06:15 UTC) and `verify-sources.yml` (manual check) |
 | `docs/` | `COWORK_TASK.md` (the scheduled-task prompt), `WORK_COMPUTER.md`, `SOURCES.md` |
 | `tests/` | offline tests (`python -m pytest -q`) |
@@ -54,21 +54,31 @@ Monday). `fetch` also takes `--from-items file.json` to run the pipeline on item
 ## How an item gets in
 
 1. **Collect.** Feeds are parsed with `feedparser`; items older than `lookback_days` are dropped; broad
-   feeds (NEJM, JAMA, Nature Medicine, FDA…) must match an oncology/RT keyword. PubMed runs the six queries
+   feeds (NEJM, JAMA, Nature Medicine, FDA…) must match an oncology/RT keyword. PubMed runs the seven queries
    with `reldate=8 datetype=edat`, pulls `esummary` for everything, pre-scores on title/journal/pubtype, and
-   fetches abstracts only for the best ~220.
+   fetches abstracts only for the best ~280. JCO and JCO Oncology Practice come from PubMed only (`jco_all`):
+   their publisher feeds carry a citation line instead of an abstract, no date, and list papers months after
+   online publication, whereas PubMed has them with abstracts the same day.
 2. **Merge.** Records that share a PMID, DOI or normalised title are merged; PubMed wins as the base record
-   (abstract, publication types), every source id is kept.
-3. **Pre-score.** `config/interests.yaml` rules: +3 randomised/phase 3, +3 guideline, +3 RT terms, journal
+   (abstract, publication types), every source id is kept. Anything already in `state/seen.json` is dropped here.
+3. **Enrich.** Journal items that are still a citation line ("…, Ahead of Print.", "Publication date: …
+   Author(s): …", or a PubMed record below the stage-2 cut) are looked up: PubMed by PMID (batched), then
+   Crossref by DOI (ASCO and most publishers deposit abstracts there; Elsevier does not; also supplies the
+   online-publication date), then PubMed by DOI, then Semantic Scholar. Items without a DOI are first matched
+   by exact title in Crossref. Budgeted (`enrich.max_lookups`, `time_budget_s`) and best-effort; `--no-enrich`
+   turns it off.
+4. **Pre-score.** `config/interests.yaml` rules: +3 randomised/phase 3, +3 guideline, +3 RT terms, journal
    tier bonus, emphasis-site bonus; −4 bench/case report, −3 protocols/letters, −2 low-yield
    journals. Disease sites are classified from the same file.
-4. **Filter.** Anything in `state/seen.json` is dropped; if last week's folder was never rendered its
+5. **Filter.** Journal items that still have no abstract are **deferred**: kept out of this week's list and
+   out of `seen`, recorded in `pending`, so that next week's PubMed/Crossref record can claim them; after
+   `enrich.defer_days` (14) they are shown as they are. If last week's folder was never rendered its
    candidates are carried over. Caps: `min_prescore`, `max_per_source`, `max_total`.
-5. **Analyse.** The analyst gets `analyst_prompt.md` (instructions + profile) and `analyst_input.md`
+6. **Analyse.** The analyst gets `analyst_prompt.md` (instructions + profile) and `analyst_input.md`
    (compact candidate list) and returns `analysis.json`: top picks, section, score, headline, 2–3-sentence
    summary, why it matters, tags. `roar analyze` validates it (unknown ids dropped, sections coerced,
    ceilings enforced) and writes `analysis.validated.json`.
-6. **Render + send.** Jinja2 → table-based inline-CSS HTML that renders in Gmail/Outlook, plus Markdown and
+7. **Render + send.** Jinja2 → table-based inline-CSS HTML that renders in Gmail/Outlook, plus Markdown and
    plain text; subject line = week + lead headline. Links: Article (DOI/publisher), PubMed, U-M full text
    (`https://proxy.lib.umich.edu/login?url=…`).
 
@@ -100,6 +110,9 @@ About $0.25/week at Sonnet prices.
 - **Digest size**: `digest_shape` in `config/settings.yaml` (top picks, max items, tidbits per section).
 - **Queries**: `config/pubmed.yaml`; test a change quickly at https://pubmed.ncbi.nlm.nih.gov with the same
   string (`python -m roar verify-sources` prints the count for each).
+- **Abstract look-ups**: `enrich` in `config/settings.yaml` (categories, budget, deferral window). Set the
+  `ROAR_CROSSREF_MAILTO` env/secret for Crossref's polite pool and `S2_API_KEY` for a steadier Semantic Scholar
+  rate limit; both are optional.
 - **Look**: `roar/templates/digest.html.j2` (inline styles only; no external CSS for email clients).
 
 ## Offline collection (when the runner cannot reach PubMed)
